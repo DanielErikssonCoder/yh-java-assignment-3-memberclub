@@ -11,20 +11,26 @@ public abstract class Item {
     private double pricePerDay;
     private double pricePerHour;
     private ItemStatus status;
+    private int year;
+    private Color color;
 
     /**
      * Creates a new item with the given information.
-     * @param id is a unique identifier for the item
-     * @param name is the name of the item
-     * @param pricePerDay is the rental price per day
-     * @param pricePerHour is the rental price per hour
+     * @param id unique identifier for the item
+     * @param name name of the item
+     * @param pricePerDay rental price per day
+     * @param pricePerHour rental price per hour
+     * @param year model year
+     * @param color item color
      */
-    public Item(String id, String name, double pricePerDay, double pricePerHour) {
+    public Item(String id, String name, double pricePerDay, double pricePerHour, int year, Color color) {
         this.id = id;
         this.name = name;
         this.pricePerDay = pricePerDay;
         this.pricePerHour = pricePerHour;
         this.status = ItemStatus.AVAILABLE;
+        this.year = year;
+        this.color = color;
     }
 
     // Getters
@@ -48,6 +54,14 @@ public abstract class Item {
         return status;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
     // Setters
     public void setName(String name) {
         this.name = name;
@@ -63,6 +77,14 @@ public abstract class Item {
 
     public void setStatus(ItemStatus status) {
         this.status = status;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     /**
@@ -99,6 +121,7 @@ public abstract class Item {
     // Returns string representation of Item for easy printing or debugging
     @Override
     public String toString() {
-        return "Item{" + "id=" + id + ", namn=" + name + ", pris/dag=" + pricePerDay + ", pris/timme=" + pricePerHour + ", status=" + status + "}";
+        return "Item{" + "id=" + id + ", namn=" + name + ", pris/dag=" + pricePerDay + ", pris/timme=" + pricePerHour
+                + ", år=" + year + ", färg=" + color + ", status=" + status + "}";
     }
 }

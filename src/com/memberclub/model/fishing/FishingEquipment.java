@@ -1,6 +1,7 @@
 package com.memberclub.model.fishing;
 
 import com.memberclub.model.Item;
+import com.memberclub.model.Color;
 
 /**
  * Abstract base class for all fishing equipment.
@@ -18,14 +19,17 @@ public abstract class FishingEquipment extends Item {
      * @param name name of equipment
      * @param pricePerDay rental price per day
      * @param pricePerHour rental price per hour
-     * @param material material type (carbon, fiberglass, nylon, etc)
+     * @param year model year
+     * @param color item color
+     * @param material material type
      * @param weight weight in kilograms
      * @param brand brand name
      */
-    public FishingEquipment(String id, String name, double pricePerDay, double pricePerHour, String material, double weight, String brand) {
+    public FishingEquipment(String id, String name, double pricePerDay, double pricePerHour, int year, Color color,
+                            String material, double weight, String brand) {
 
         // Call parent constructor (Item Class)
-        super(id, name, pricePerDay, pricePerHour);
+        super(id, name, pricePerDay, pricePerHour, year, color);
 
         // Initialize own fields
         this.material = material;
@@ -62,6 +66,6 @@ public abstract class FishingEquipment extends Item {
     // Returns string representation of fishing equipment for easy printing or debugging
     @Override
     public String toString() {
-        return "FishingEquipment{" + "material=" + material + ", vikt=" + weight + ", märke=" + brand + "} " + super.toString();
+        return "FishingEquipment{" + "material=" + material + ", vikt=" + weight + ", varumärke=" + brand + "} " + super.toString();
     }
 }

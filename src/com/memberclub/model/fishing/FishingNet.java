@@ -1,6 +1,7 @@
 package com.memberclub.model.fishing;
 
 import com.memberclub.model.ItemType;
+import com.memberclub.model.Color;
 
 /**
  * Concrete class that represents a fishing net.
@@ -17,14 +18,17 @@ public class FishingNet extends FishingEquipment {
      * @param name name of the net
      * @param pricePerDay rental price per day
      * @param pricePerHour rental price per hour
+     * @param year model year
+     * @param color item color
      * @param material material type
      * @param weight weight in kilograms
      * @param brand brand name
      * @param netSize size of the net (SMALL, MEDIUM, LARGE)
      * @param meshSize mesh size in millimeters
      */
-    public FishingNet(String id, String name, double pricePerDay, double pricePerHour, String material, double weight, String brand, NetSize netSize, double meshSize) {
-        super(id, name, pricePerDay, pricePerHour, material, weight, brand);
+    public FishingNet(String id, String name, double pricePerDay, double pricePerHour, int year, Color color,
+                      String material, double weight, String brand, NetSize netSize, double meshSize) {
+        super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
         this.netSize = netSize;
         this.meshSize = meshSize;
     }
