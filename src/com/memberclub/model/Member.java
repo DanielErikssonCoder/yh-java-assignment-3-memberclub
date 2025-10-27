@@ -62,6 +62,7 @@ public class Member {
         rentalHistory.add(rentalId);
     }
 
+    // Returns string representation of Member for easy printing or debugging
     @Override
     public String toString() {
         return "Medlem{" + "id=" + id + ", namn=" + name + ", nivå=" + membershipLevel + ", historik=" + rentalHistory.size() + "}";
