@@ -1,6 +1,7 @@
 package com.memberclub.model.camping;
 
 import com.memberclub.model.Color;
+import com.memberclub.model.FuelType;
 import com.memberclub.model.ItemType;
 import com.memberclub.model.Material;
 
