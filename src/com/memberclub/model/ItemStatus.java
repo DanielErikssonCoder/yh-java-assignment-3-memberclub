@@ -2,7 +2,7 @@ package com.memberclub.model;
 
 /**
  * This represents the current status of an item in the inventory.
- * Both for tracking availability and condition
+ * Both for tracking availability and condition.
  */
 public enum ItemStatus {
 
