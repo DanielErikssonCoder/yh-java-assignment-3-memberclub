@@ -2,6 +2,7 @@ package com.memberclub.model.fishing;
 
 import com.memberclub.model.ItemType;
 import com.memberclub.model.Color;
+import com.memberclub.model.Material;
 
 /**
  * Concrete class that represents a fishing net.
@@ -27,7 +28,7 @@ public class FishingNet extends FishingEquipment {
      * @param meshSize mesh size in millimeters
      */
     public FishingNet(String id, String name, double pricePerDay, double pricePerHour, int year, Color color,
-                      String material, double weight, String brand, NetSize netSize, double meshSize) {
+                      Material material, double weight, String brand, NetSize netSize, double meshSize) {
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
         this.netSize = netSize;
         this.meshSize = meshSize;

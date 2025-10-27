@@ -2,6 +2,7 @@ package com.memberclub.model.fishing;
 
 import com.memberclub.model.ItemType;
 import com.memberclub.model.Color;
+import com.memberclub.model.Material;
 
 /**
  * Concrete class that represents a fishing rod.
@@ -27,7 +28,7 @@ public class FishingRod extends FishingEquipment {
      * @param rodType type of fishing rod
      */
     public FishingRod(String id, String name, double pricePerDay, double pricePerHour,  int year, Color color,
-                      String material, double weight, String brand, double rodLength, RodType rodType) {
+                      Material material, double weight, String brand, double rodLength, RodType rodType) {
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
         this.rodLength = rodLength;
         this.rodType = rodType;

@@ -2,6 +2,7 @@ package com.memberclub.model.fishing;
 
 import com.memberclub.model.ItemType;
 import com.memberclub.model.Color;
+import com.memberclub.model.Material;
 
 /**
  * Concrete class representing fishing bait.
@@ -27,7 +28,7 @@ public class FishingBait extends FishingEquipment {
      * @param quantity number of pieces in package
      */
     public FishingBait(String id, String name, double pricePerDay, double pricePerHour, int year, Color color,
-                       String material, double weight, String brand, BaitType baitType, int quantity) {
+                       Material material, double weight, String brand, BaitType baitType, int quantity) {
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
         this.baitType = baitType;
         this.quantity = quantity;

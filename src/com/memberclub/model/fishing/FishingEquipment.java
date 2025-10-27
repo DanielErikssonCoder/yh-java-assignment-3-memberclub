@@ -2,6 +2,7 @@ package com.memberclub.model.fishing;
 
 import com.memberclub.model.Item;
 import com.memberclub.model.Color;
+import com.memberclub.model.Material;
 
 /**
  * Abstract base class for all fishing equipment.
@@ -9,7 +10,7 @@ import com.memberclub.model.Color;
  */
 public abstract class FishingEquipment extends Item {
 
-    private String material;
+    private Material material;
     private double weight;
     private String brand;
 
@@ -26,7 +27,7 @@ public abstract class FishingEquipment extends Item {
      * @param brand brand name
      */
     public FishingEquipment(String id, String name, double pricePerDay, double pricePerHour, int year, Color color,
-                            String material, double weight, String brand) {
+                            Material  material, double weight, String brand) {
 
         // Call parent constructor (Item Class)
         super(id, name, pricePerDay, pricePerHour, year, color);
@@ -38,7 +39,7 @@ public abstract class FishingEquipment extends Item {
     }
 
     // Getters
-    public String getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 
@@ -51,7 +52,7 @@ public abstract class FishingEquipment extends Item {
     }
 
     // Setters
-    public void setMaterial(String material) {
+    public void setMaterial(Material material) {
         this.material = material;
     }
 
