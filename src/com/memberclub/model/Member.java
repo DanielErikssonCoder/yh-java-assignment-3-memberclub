@@ -16,9 +16,9 @@ public class Member {
 
     /**
      * Constructor that creates a new member with the given information.
-     * @param id is the unique member id
-     * @param name is the member's name
-     * @param membershipLevel is the membership level (STANDARD, STUDENT, or PREMIUM)
+     * @param id unique member id
+     * @param name member's name
+     * @param membershipLevel membership level (STANDARD, STUDENT, or PREMIUM)
      */
     public Member(int id, String name, MembershipLevel membershipLevel) {
         this.id = id;

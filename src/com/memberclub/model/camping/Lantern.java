@@ -30,7 +30,7 @@ public class Lantern extends CampingEquipment {
     public Lantern(String id, String name, double pricePerDay, double pricePerHour, int year, Color color, Material material,
                    double weight, String brand, int brightness, PowerSource powerSource) {
 
-        // Call parent constructors (Item Class and CampingEquipment)
+        // Call parent constructors (CampingEquipment, which calls Item)
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
 
         // Initialize own fields

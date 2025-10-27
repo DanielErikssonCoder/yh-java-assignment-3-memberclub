@@ -30,7 +30,7 @@ public class Tent extends CampingEquipment {
     public Tent(String id, String name, double pricePerDay, double pricePerHour, int year, Color color, Material material,
                 double weight, String brand, int capacity, SeasonRating seasonRating) {
 
-        // Call parent constructors (Item Class and CampingEquipment)
+        // Call parent constructors (CampingEquipment, which calls Item)
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
 
         // Initialize own fields

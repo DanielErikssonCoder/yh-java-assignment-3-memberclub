@@ -30,7 +30,7 @@ public class FishingBait extends FishingEquipment {
     public FishingBait(String id, String name, double pricePerDay, double pricePerHour, int year, Color color,
                        Material material, double weight, String brand, BaitType baitType, int quantity) {
 
-        // Call parent constructors (Item Class and FishingEquipment)
+        // Call parent constructors (FishingEquipment, which calls Item)
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
 
         // Initialize own fields

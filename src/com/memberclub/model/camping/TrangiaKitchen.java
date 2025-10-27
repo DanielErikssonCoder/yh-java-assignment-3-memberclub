@@ -30,7 +30,7 @@ public class TrangiaKitchen extends CampingEquipment {
     public TrangiaKitchen(String id, String name, double pricePerDay, double pricePerHour, int year, Color color, Material material,
                           double weight, String brand, int burners, FuelType fuelType) {
 
-        // Call parent constructors (Item Class and CampingEquipment)
+        // Call parent constructors (CampingEquipment, which calls Item)
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
 
         // Initialize own fields
