@@ -3,7 +3,6 @@ package com.memberclub.model;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Represents a member in the rental club.
  * Each member has an id, name, membership level and rental history.
