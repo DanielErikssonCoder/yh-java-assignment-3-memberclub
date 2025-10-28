@@ -5,12 +5,12 @@ package com.memberclub.model;
  */
 public enum RentalStatus {
 
-    // rental is currently ongoing
+    // Rental is currently ongoing
     ACTIVE,
 
-    // rental has been returned and completed
+    // Rental has been returned and completed
     COMPLETED,
 
-    // rental was cancelled before completion
+    // Rental was cancelled before completion
     CANCELLED
 }

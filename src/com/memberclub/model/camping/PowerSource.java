@@ -5,15 +5,15 @@ package com.memberclub.model.camping;
  */
 public enum PowerSource {
 
-    // disposable batteries
+    // Disposable batteries
     BATTERY,
 
     // USB rechargeable
     RECHARGEABLE,
 
-    // propane/butane
+    // Propane/Butane
     GAS,
 
-    // solar powered
+    // Solar powered
     SOLAR
 }

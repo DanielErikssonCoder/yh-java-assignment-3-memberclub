@@ -6,7 +6,7 @@ package com.memberclub.model;
  */
 public enum MembershipLevel {
 
-    /**
+    /*
     Standard membership - basic pricing
     Student membership - discounted pricing
     Premium membership - best pricing and benefits

@@ -7,20 +7,20 @@ public enum FuelType {
 
     // Camping stove fuels
 
-    // methylated spirits (trangia)
+    // Methylated spirits (trangia)
     ALCOHOL,
 
-    // butane/propane (trangia, lanterns)
+    // Butane/Propane (trangia, lanterns)
     GAS,
 
-    // multiple fuel types (trangia)
+    // Multiple fuel types (trangia)
     MULTIFUEL,
 
     // Boat fuels
 
-    // petrol (motor boats)
+    // Petrol (motor boats)
     GASOLINE,
 
-    // diesel fuel (motor boats)
+    // Diesel fuel (motor boats)
     DIESEL
 }
