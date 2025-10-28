@@ -12,6 +12,7 @@ public class Tent extends CampingEquipment {
 
     private int capacity;
     private SeasonRating seasonRating;
+    private TentType tentType;
 
     /**
      * Constructor that creates a new tent with given specifications.
@@ -26,9 +27,10 @@ public class Tent extends CampingEquipment {
      * @param brand brand name
      * @param capacity number of persons
      * @param seasonRating season suitability
+     * @param tentType type of tent structure
      */
     public Tent(String id, String name, double pricePerDay, double pricePerHour, int year, Color color, Material material,
-                double weight, String brand, int capacity, SeasonRating seasonRating) {
+                double weight, String brand, int capacity, SeasonRating seasonRating, TentType tentType) {
 
         // Call parent constructors (CampingEquipment, which calls Item)
         super(id, name, pricePerDay, pricePerHour, year, color, material, weight, brand);
@@ -36,6 +38,7 @@ public class Tent extends CampingEquipment {
         // Initialize own fields
         this.capacity = capacity;
         this.seasonRating = seasonRating;
+        this.tentType = tentType;
     }
 
     // Getters
@@ -47,6 +50,10 @@ public class Tent extends CampingEquipment {
         return seasonRating;
     }
 
+    public TentType getTentType() {
+        return tentType;
+    }
+
     // Setters
     public void setCapacity(int capacity) {
         this.capacity = capacity;
@@ -54,6 +61,10 @@ public class Tent extends CampingEquipment {
 
     public void setSeasonRating(SeasonRating seasonRating) {
         this.seasonRating = seasonRating;
+    }
+
+    public void setTentType(TentType tentType) {
+        this.tentType = tentType;
     }
 
     // Returns the specific item type for this tent
@@ -65,6 +76,6 @@ public class Tent extends CampingEquipment {
     // Returns string representation for easy printing or debugging
     @Override
     public String toString() {
-        return "Tent{" + "kapacitet=" + capacity + " personer, säsong=" + seasonRating + "} " + super.toString();
+        return "Tent{" + "kapacitet=" + capacity + " personer, säsong=" + seasonRating + ", typ=" + tentType + "} " + super.toString();
     }
 }
