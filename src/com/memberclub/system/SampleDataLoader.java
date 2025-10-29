@@ -108,10 +108,10 @@ public class SampleDataLoader {
      */
     public static void loadSampleMembers(MemberRegistry registry, MemberIdGenerator generator) {
 
-        registry.addMember(new Member(generator.generateMemberId(), "Daniel Svensson", MembershipLevel.STANDARD));
+        registry.addMember(new Member(generator.generateMemberId(), "Daniel Svensson", "daniel.svensson@gmail.com", "0701234567", MembershipLevel.STANDARD));
 
-        registry.addMember(new Member(generator.generateMemberId(), "Erik Johansson", MembershipLevel.STUDENT));
+        registry.addMember(new Member(generator.generateMemberId(), "Erik Johansson", "erik.johansson@gmail.com", "0731234567", MembershipLevel.STUDENT));
 
-        registry.addMember(new Member(generator.generateMemberId(), "Anders Karlsson", MembershipLevel.PREMIUM));
+        registry.addMember(new Member(generator.generateMemberId(), "Anders Karlsson", "anders.karlsson@gmail.com", "0761234567", MembershipLevel.PREMIUM));
     }
 }

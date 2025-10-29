@@ -1,6 +1,7 @@
 package com.memberclub.service;
 
 import com.memberclub.model.*;
+import com.memberclub.system.MemberIdGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +12,16 @@ import java.util.List;
 public class MembershipService {
 
     private MemberRegistry memberRegistry;
+    private MemberIdGenerator memberIdGenerator;
 
     /**
-     * Creates a MembershipService with access to the member registry
+     * Creates a MembershipService with access to the member registry and ID generator
      * @param memberRegistry the registry to manage members
+     * @param memberIdGenerator the ID generator for new members
      */
-    public MembershipService(MemberRegistry memberRegistry) {
+    public MembershipService(MemberRegistry memberRegistry, MemberIdGenerator memberIdGenerator) {
         this.memberRegistry = memberRegistry;
+        this.memberIdGenerator = memberIdGenerator;
     }
 
     /**
@@ -29,16 +33,36 @@ public class MembershipService {
     }
 
     /**
+     * Creates and adds a new member to the system.
+     * @param name member name
+     * @param email member email
+     * @param phone member phone
+     * @param level membership level
+     * @return the created member
+     */
+    public Member addMember(String name, String email, String phone, MembershipLevel level) {
+        int memberId = memberIdGenerator.generateMemberId();
+        Member newMember = new Member(memberId, name, email, phone, level);
+        memberRegistry.addMember(newMember);
+        return newMember;
+    }
+
+    /**
+     * Removes a member from the system.
+     * @param memberId the member ID
+     * @return true if removed successfully
+     */
+    public boolean removeMember(int memberId) {
+        return memberRegistry.removeMember(memberId);
+    }
+
+    /**
      * Finds a member by their ID.
      * @param memberId the ID to search for
      * @return the member if found, null otherwise
      */
     public Member getMember(int memberId) {
-
-        // Get member from registry
-        Member member = memberRegistry.getMember(memberId);
-
-        return member;
+        return memberRegistry.getMember(memberId);
     }
 
     /**
@@ -69,11 +93,7 @@ public class MembershipService {
      * @return list of all members
      */
     public List<Member> getAllMembers() {
-
-        // Get all members from registry
-        List<Member> members = memberRegistry.getAllMembers();
-
-        return members;
+        return memberRegistry.getAllMembers();
     }
 
     /**

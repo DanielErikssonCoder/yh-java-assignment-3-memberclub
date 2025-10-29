@@ -34,7 +34,7 @@ public class ClubSystem {
         this.inventory = new Inventory();
         this.memberRegistry = new MemberRegistry();
         this.rentalService = new RentalService(inventory, memberRegistry);
-        this.membershipService = new MembershipService(memberRegistry);
+        this.membershipService = new MembershipService(memberRegistry, memberIdGenerator);
 
         this.users = new HashMap<>();
 
@@ -104,6 +104,29 @@ public class ClubSystem {
     }
 
     /**
+     * Creates a new user in the system.
+     * @param username the username
+     * @param password the password
+     * @param fullName the user's full name
+     * @return true if user was created successfully, false if username already exists
+     */
+    public boolean createUser(String username, String password, String fullName) {
+
+        // Check if username already exists
+        if (getUser(username) != null) {
+            return false;
+        }
+
+        // Create new user
+        User newUser = new User(username, password, fullName);
+
+        // Add to users map
+        users.put(username, newUser);
+
+        return true;
+    }
+
+    /**
      * Removes a user from the system.
      * @param username the username of the user to remove
      * @return true if removed, false if not found
@@ -140,7 +163,6 @@ public class ClubSystem {
      * @param password the password to validate
      * @return the authenticated User object, or null if the authentication fails
      */
-
     public User authenticateUser(String username, String password) {
 
         // Get user from HashMap by username

@@ -5,12 +5,14 @@ import java.util.List;
 
 /**
  * Represents a member in the rental club.
- * Each member has an id, name, membership level and rental history.
+ * Each member has an id, name, email, phone, membership level and rental history.
  */
 public class Member {
 
     private int id;
     private String name;
+    private String email;
+    private String phone;
     private MembershipLevel membershipLevel;
     private List<String> rentalHistory;
 
@@ -18,11 +20,15 @@ public class Member {
      * Constructor that creates a new member with the given information.
      * @param id unique member id
      * @param name member's name
+     * @param email member's email adress
+     * @param phone member's phone number
      * @param membershipLevel membership level (STANDARD, STUDENT, or PREMIUM)
      */
-    public Member(int id, String name, MembershipLevel membershipLevel) {
+    public Member(int id, String name, String email, String phone, MembershipLevel membershipLevel) {
         this.id = id;
         this.name = name;
+        this.email = email;
+        this.phone = phone;
         this.membershipLevel = membershipLevel;
         this.rentalHistory = new ArrayList<>();
     }
@@ -36,6 +42,14 @@ public class Member {
         return name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public MembershipLevel getMembershipLevel() {
         return membershipLevel;
     }
@@ -47,6 +61,14 @@ public class Member {
     // Setters
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setMembershipLevel(MembershipLevel membershipLevel) {

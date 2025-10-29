@@ -13,6 +13,7 @@ public class Rental {
     private int memberId;
     private String itemId;
     private LocalDate startDate;
+    private LocalDate expectedReturnDate;
     private LocalDate endDate;
     private double totalCost;
     private RentalStatus status;
@@ -23,17 +24,18 @@ public class Rental {
      * @param memberId ID of the member renting
      * @param itemId ID of the item being rented
      * @param startDate start date of rental period
+     * @param expectedReturnDate expected return date
      * @param endDate end date of rental period
      * @param totalCost total cost calculated by pricing policy
      */
-    public Rental(String rentalId, int memberId, String itemId, LocalDate startDate, LocalDate endDate,
-                  double totalCost) {
+    public Rental(String rentalId, int memberId, String itemId, LocalDate startDate, LocalDate expectedReturnDate, LocalDate endDate, double totalCost) {
 
         // Initialize own fields
         this.rentalId = rentalId;
         this.memberId = memberId;
         this.itemId = itemId;
         this.startDate = startDate;
+        this.expectedReturnDate = expectedReturnDate;
         this.endDate = endDate;
         this.totalCost = totalCost;
         this.status = RentalStatus.ACTIVE;
@@ -101,6 +103,7 @@ public class Rental {
      * Marks the rental as completed.
      */
     public void complete() {
+        this.endDate = LocalDate.now();
         this.status = RentalStatus.COMPLETED;
     }
 

@@ -71,15 +71,15 @@ public class RentalService {
         rentalCounter++;
 
         // Set end date -> same day for hourly, add duration for daily
-        LocalDate endDate;
+        LocalDate expectedReturnDate;
         if (period == RentalPeriod.HOURLY) {
-            endDate = LocalDate.now();
+            expectedReturnDate = LocalDate.now();
         } else {
-            endDate = LocalDate.now().plusDays(duration);
+            expectedReturnDate = LocalDate.now().plusDays(duration);
         }
 
         // Create a rental object
-        Rental rental = new Rental(rentalId, memberId, itemId, LocalDate.now(), endDate, totalCost);
+        Rental rental = new Rental(rentalId, memberId, itemId, LocalDate.now(), expectedReturnDate, null, totalCost);
 
         // Mark item as rented
         item.setStatus(ItemStatus.RENTED);

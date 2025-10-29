@@ -3,7 +3,6 @@ package com.memberclub.ui;
 import com.memberclub.system.ClubSystem;
 import com.memberclub.model.User;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 /**
  * Console-based UI for the Member Club Rental System.
@@ -14,10 +13,12 @@ public class ConsoleMenu {
     private Scanner scanner;
     private ClubSystem system;
     private User currentUser;
+    private UIHelper helper;
 
-    // ANSI color codes - Outdoor/Camping theme
-    private static final String GREEN = "\033[38;5;28m";
-    private static final String RESET = "\033[0m";
+    // View classes
+    private RentalView rentalView;
+    private ItemView itemView;
+    private MemberView memberView;
 
     /**
      * Creates a new console menu.
@@ -27,112 +28,213 @@ public class ConsoleMenu {
         this.scanner = new Scanner(System.in);
         this.system = system;
         this.currentUser = null;
+        this.helper = new UIHelper(scanner);
+
+        // Initialize view classes
+        this.rentalView = new RentalView(scanner, system, helper);
+        this.itemView = new ItemView(scanner, system, helper);
+        this.memberView = new MemberView(scanner, system, helper);
     }
 
     /**
-     * Clears the console screen
-     */
-    private void clearScreen() {
-        try {
-
-            // Check if system is Windows
-            if (System.getProperty("os.name").contains("Windows")) {
-
-                // Execute Windows command to clear the console
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                System.out.println();
-
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-                System.out.println();
-            }
-        } catch (Exception e) {
-
-            // If clear fails, then we just print some empty lines
-            for (int i = 0; i < 50; i++) {
-                System.out.println();
-            }
-        }
-    }
-
-    /**
-     * Waits for user to press 'Enter' before continuing
-     */
-    private void pressEnterToContinue() {
-        System.out.println();
-        System.out.print("Tryck 'Enter' för att fortsätta...");
-        scanner.nextLine();
-    }
-
-    /**
-     * Waits for user to press 'Enter' before quitting
-     */
-    private void pressEnterToQuit() {
-        System.out.println();
-        System.out.print("Tryck 'Enter' för att avsluta...");
-        scanner.nextLine();
-    }
-
-    /**
-     * Displays start/logout menu with login or exit options.
+     * Displays start/logout menu with login, register, or exit options.
      * @param afterLogout if true, shows the logout message first
-     * @return true if user wants to login, false if user wants to exit program
+     * @return true if user wants to continue, false if user wants to exit program
      */
     private boolean showStartOrLogoutMenu(boolean afterLogout) {
 
         // If user just logged out, show message first
         if (afterLogout) {
-            clearScreen();
+            helper.clearScreen();
             System.out.println("Du har loggats ut.");
-            pressEnterToContinue();
+            helper.pressEnterToContinue();
         }
 
-        clearScreen();
-        System.out.println(GREEN + "=====================================" + RESET);
-        System.out.println("    MEDLEMSKLUBB UTHYRNINGSSYSTEM");
-        System.out.println(GREEN + "=====================================" + RESET);
-        System.out.println();
-        System.out.println(" [1] Logga in");
-        System.out.println(" [0] Avsluta program");
-        System.out.println();
-        System.out.println(GREEN + "=====================================" + RESET);
-        System.out.print("Välj alternativ: ");
+        // Control variable for menu loop
+        boolean shouldContinue = true;
 
-        // Read choice with validation
-        int choice = -1;
+        // Continue loop until user logs in or exits
+        while (shouldContinue) {
+            // Clear screen once when menu opens
+            helper.clearScreen();
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+            System.out.println("    MEDLEMSKLUBB UTHYRNINGSSYSTEM");
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+            System.out.println();
+            System.out.println("[1] Logga in");
+            System.out.println("[2] Skapa användare");
+            System.out.println("[0] Avsluta program");
+            System.out.println();
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+            System.out.println();
+            System.out.print("Välj alternativ: ");
 
-        while (choice != 0 && choice != 1) {
+            // Read choice with validation
+            int choice = -1;
 
-            try {
-                choice = scanner.nextInt();
-                scanner.nextLine();
+            // Continue loop until user choose either 0,1,2
+            while (choice != 0 && choice != 1 && choice != 2) {
 
-                if (choice != 0 && choice != 1) {
+                String input = scanner.nextLine().trim();
+
+                // Check if input is empty
+                if (input.isEmpty()) {
                     System.out.println();
-                    System.out.println("Ogiltigt val! Välj 'Logga in' eller 'Avsluta program'");
+                    System.out.println("Du måste ange ett val!");
+                    System.out.println();
+                    System.out.print("Välj alternativ: ");
+                    continue;
+                }
+
+                // Try to parse as integer
+                try {
+                    choice = Integer.parseInt(input);
+
+                    // Check if user choice is one of the valid options
+                    if (choice != 0 && choice != 1 && choice != 2) {
+                        System.out.println();
+                        System.out.println("Ogiltigt val! Välj 'Logga in', 'Skapa användare' eller 'Avsluta program'");
+                        System.out.println();
+                        System.out.print("Välj alternativ: ");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println();
+                    System.out.println("Ogiltigt val! Ange ett nummer.");
+                    System.out.println();
                     System.out.print("Välj alternativ: ");
                 }
-            } catch (InputMismatchException e) {
-                scanner.nextLine();
-                System.out.println();
-                System.out.println("Ogiltigt val! Ange ett nummer.");
-                System.out.print("Välj alternativ: ");
+            }
+
+            // Handle choice
+            if (choice == 1) {
+                // Login - exit loop and return true
+                return true;
+
+            } else if (choice == 2) {
+                // Register new user
+                registerNewUser();
+                // Loop continues - show menu again
+
+            } else {
+                // Exit program
+                helper.clearScreen();
+                System.out.println("Tack för att du använder uthyrningssystemet!");
+                helper.pressEnterToQuit();
+                return false;
             }
         }
+        return false;
+    }
 
-        if (choice == 1) {
-            // Login
-            return true;
+    /**
+     * Registers a new user in the system.
+     */
+    private void registerNewUser() {
+        helper.clearScreen();
+        System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+        System.out.println("    MEDLEMSKLUBB UTHYRNINGSSYSTEM");
+        System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+        System.out.println("          SKAPA ANVÄNDARE");
+        System.out.println(UIHelper.GREEN + "-------------------------------------" + UIHelper.RESET);
+        System.out.println();
 
-        } else {
-            clearScreen();
-            System.out.println("Tack för att du använder uthyrningssystemet!");
-            pressEnterToQuit();
+        // Get username
+        String username = "";
+        boolean usernameValid = false;
 
-            // Exit
-            return false;
+        // Continue loop until valid username
+        while (!usernameValid) {
+            System.out.print("Användarnamn: ");
+            username = scanner.nextLine().trim();
+
+            // Check if username is empty
+            if (username.isEmpty()) {
+                System.out.println();
+                System.out.println("Användarnamn kan inte vara tomt!");
+                System.out.println();
+                continue;
+            }
+
+            // Check if username already exists
+            if (system.getUser(username) != null) {
+                System.out.println();
+                System.out.println("Användarnamn är redan taget! Välj ett annat.");
+                System.out.println();
+                continue;
+            }
+
+            usernameValid = true;
         }
+
+        // Get password
+        String password = "";
+        boolean passwordValid = false;
+
+        // Continue loop until valid password
+        while (!passwordValid) {
+            System.out.println();
+            System.out.print("Lösenord (minst 4 tecken): ");
+            password = scanner.nextLine().trim();
+
+            // Validate password length
+            if (password.length() < 4) {
+                System.out.println();
+                System.out.println("Lösenordet måste vara minst 4 tecken!");
+                continue;
+            }
+
+            // Confirm password
+            System.out.println();
+            System.out.print("Bekräfta lösenord: ");
+            String confirmPassword = scanner.nextLine().trim();
+
+            // Check if passwords match
+            if (!password.equals(confirmPassword)) {
+                System.out.println();
+                System.out.println("Lösenorden matchar inte! Försök igen.");
+                continue;
+            }
+
+            passwordValid = true;
+        }
+
+        // Get full name
+        System.out.println();
+        System.out.print("Fullständigt namn: ");
+        String fullName = scanner.nextLine().trim();
+
+        // Validate full name
+        while (fullName.isEmpty()) {
+            System.out.println();
+            System.out.println("Namnet kan inte vara tomt!");
+            System.out.println();
+            System.out.print("Fullständigt namn: ");
+            fullName = scanner.nextLine().trim();
+        }
+
+        // Create the user
+        boolean userCreated = system.createUser(username, password, fullName);
+
+        // Display success or error message
+        if (userCreated) {
+            helper.clearScreen();
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+            System.out.println("         ANVÄNDARE SKAPAD!");
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+            System.out.println();
+            System.out.println("Användarnamn: " + username);
+            System.out.println("Lösenord: " + password);
+            System.out.println("Fullständigt namn: " + fullName);
+            System.out.println();
+            System.out.println("Du kan nu logga in med ditt användarnamn och lösenord.");
+            System.out.println();
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+        } else {
+            helper.clearScreen();
+            System.out.println("Något gick fel vid skapande av användare. Försök igen.");
+            System.out.println();
+        }
+        helper.pressEnterToContinue();
     }
 
     /**
@@ -147,25 +249,33 @@ public class ConsoleMenu {
         // Outer loop: Until successful authentication
         while (authenticatedUser == null) {
 
-            clearScreen();
-            System.out.println(GREEN + "=====================================" + RESET);
+            helper.clearScreen();
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
             System.out.println("    MEDLEMSKLUBB UTHYRNINGSSYSTEM");
-            System.out.println(GREEN + "=====================================" + RESET);
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
             System.out.println("              LOGGA IN");
-            System.out.println(GREEN + "-------------------------------------" + RESET);
+            System.out.println(UIHelper.GREEN + "-------------------------------------" + UIHelper.RESET);
             System.out.println();
 
-            // Inner loop 1: Validate username exists
+            // Inner loop that validates that username exists
             User user = null;
             String username = "";
 
+            // Continue loop until valid username found
             while (user == null) {
                 System.out.print("Användarnamn: ");
                 username = scanner.nextLine().trim();
 
-                // Check if the user exists
-                user = system.getUser(username);
+                // Check if username is empty
+                if (username.isEmpty()) {
+                    System.out.println();
+                    System.out.println("Användarnamn kan inte vara tomt!");
+                    System.out.println();
+                    continue;
+                }
 
+                // Check if the user exists, and display error message if not found
+                user = system.getUser(username);
                 if (user == null) {
                     System.out.println();
                     System.out.println("Användaren finns inte! Försök igen.");
@@ -173,13 +283,19 @@ public class ConsoleMenu {
                 }
             }
 
-            // Inner loop 2: Validate password is correct
+            // Inner loop that validates that password is correct
             boolean passwordCorrect = false;
-
             while (!passwordCorrect) {
                 System.out.println();
                 System.out.print("Lösenord: ");
                 String password = scanner.nextLine().trim();
+
+                // Check if password is empty
+                if (password.isEmpty()) {
+                    System.out.println();
+                    System.out.println("Lösenord kan inte vara tomt!");
+                    continue;
+                }
 
                 // Validate password
                 if (user.validatePassword(password)) {
@@ -188,7 +304,6 @@ public class ConsoleMenu {
                 } else {
                     System.out.println();
                     System.out.println("Fel lösenord! Försök igen.");
-                    System.out.println();
                 }
             }
         }
@@ -200,24 +315,26 @@ public class ConsoleMenu {
      */
     private void printMainMenu() {
 
-        clearScreen();
-        System.out.println(GREEN + "=====================================" + RESET);
+        helper.clearScreen();
+        System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
         System.out.println("    MEDLEMSKLUBB UTHYRNINGSSYSTEM");
-        System.out.println(GREEN + "=====================================" + RESET);
+        System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
 
         // Display logged in user
-        System.out.println("    Inloggad som: " + currentUser.getFullName());
-        System.out.println(GREEN + "-------------------------------------" + RESET);
+        System.out.println("       Konto: " + currentUser.getFullName());
+        System.out.println(UIHelper.GREEN + "-------------------------------------" + UIHelper.RESET);
 
         System.out.println();
-        System.out.println(" [1] Hyr föremål");
-        System.out.println(" [2] Returnera föremål");
-        System.out.println(" [3] Visa mina uthyrningar");
-        System.out.println(" [4] Hantera medlemmar");
-        System.out.println(" [5] Visa alla föremål");
-        System.out.println(" [0] Logga ut");
+        System.out.println("[1] Uthyrning");
+        System.out.println("[2] Returnera");
+        System.out.println("[3] Visa uthyrningar");
+        System.out.println("[4] Hantera medlemmar");
+        System.out.println("[5] Visa alla artiklar");
+        System.out.println("[6] Kassavy");
         System.out.println();
-        System.out.println(GREEN + "=====================================" + RESET);
+        System.out.println("[0] Logga ut");
+        System.out.println();
+        System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
         System.out.println();
         System.out.print("Välj alternativ: ");
     }
@@ -231,114 +348,85 @@ public class ConsoleMenu {
         // Show start menu
         boolean wantsToLogin = showStartOrLogoutMenu(false);
 
+        // Check if user chose to exit
         if (!wantsToLogin) {
-
-            // User chose to exit immediately
             return;
         }
 
+        // Main application loop
         boolean running = true;
-
         while (running) {
 
             // Login
             currentUser = showLogin();
 
             // Welcome message
-            clearScreen();
+            helper.clearScreen();
             System.out.println("Välkommen " + currentUser.getFullName() + "!");
-            pressEnterToContinue();
+            helper.pressEnterToContinue();
 
-            // Main menu loop
             boolean loggedIn = true;
 
+            // Continue loop until user logs out
             while (loggedIn) {
                 printMainMenu();
 
-                // Read user choice
+                // Initialize a choice variable for the validation loop
                 int choice = -1;
 
-                try {
-                    choice = scanner.nextInt();
-                    scanner.nextLine();
+                // Continue loop until valid choice
+                while (choice < 0 || choice > 6) {
+                    String input = scanner.nextLine().trim();
 
-                } catch (InputMismatchException e) {
-                    scanner.nextLine();
+                    // Check if input is empty
+                    if (input.isEmpty()) {
+                        System.out.println();
+                        System.out.println("Du måste ange ett val!");
+                        System.out.println();
+                        System.out.print("Välj alternativ: ");
+                        continue;
+                    }
+
+                    // Try to parse input as integer
+                    try {
+                        choice = Integer.parseInt(input);
+
+                        // Validate that choice is within valid range
+                        if (choice < 0 || choice > 6) {
+                            System.out.println();
+                            System.out.println("Ogiltigt val! Ange ett nummer mellan 0-6.");
+                            System.out.println();
+                            System.out.print("Välj alternativ: ");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println();
+                        System.out.println("Ogiltigt val! Ange ett nummer.");
+                        System.out.println();
+                        System.out.print("Välj alternativ: ");
+                    }
                 }
 
-                System.out.println();
-
-                // Handle menu navigation
+                // Handle menu navigation - delegates to view classes
                 switch (choice) {
-                    case 1 -> rentItem();
-                    case 2 -> returnItem();
-                    case 3 -> viewMyRentals();
-                    case 4 -> manageMembers();
-                    case 5 -> viewAllItems();
-
-                    // Trigger logout
+                    case 1 -> rentalView.rentItem();
+                    case 2 -> rentalView.returnItem();
+                    case 3 -> rentalView.viewMyRentals();
+                    case 4 -> memberView.manageMembers();
+                    case 5 -> itemView.viewAllItems();
+                    case 6 -> rentalView.showRevenue();
                     case 0 -> loggedIn = false;
-
-                    default -> {
-                        System.out.println("Ogiltigt val! Försök igen.");
-                        pressEnterToContinue();
-                    }
                 }
             }
 
             // After logout - show menu with logout message
             boolean loginAgain = showStartOrLogoutMenu(true);
 
+            // Check if user wants to exit or login again
             if (!loginAgain) {
 
                 // Exit program
                 running = false;
             }
         }
-    }
-
-    /**
-     * Menu option 1: Rent an item
-     */
-    private void rentItem() {
-        clearScreen();
-        System.out.println("Hyra");
-        pressEnterToContinue();
-    }
-
-    /**
-     * Menu option 2: Return an item
-     */
-    private void returnItem() {
-        clearScreen();
-        System.out.println("Returnera");
-        pressEnterToContinue();
-    }
-
-    /**
-     * Menu option 3: View my rentals
-     */
-    private void viewMyRentals() {
-        clearScreen();
-        System.out.println("Visa uthyrningar");
-        pressEnterToContinue();
-    }
-
-    /**
-     * Menu option 4: Manage members
-     */
-    private void manageMembers() {
-        clearScreen();
-        System.out.println("Hantera medlemmar");
-        pressEnterToContinue();
-    }
-
-    /**
-     * Menu option 5: View all items
-     */
-    private void viewAllItems() {
-        clearScreen();
-        System.out.println("Visa alla föremål");
-        pressEnterToContinue();
     }
 }
