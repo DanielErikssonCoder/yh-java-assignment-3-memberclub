@@ -170,6 +170,8 @@ Organized into clear packages where each has a specific responsibility.
 
 **From terminal:**
 
+
+**From terminal (Unix/Mac/Git Bash):**
 ```bash
 # Compile all files
 javac -d out src/Main.java src/com/memberclub/**/*.java
@@ -177,6 +179,22 @@ javac -d out src/Main.java src/com/memberclub/**/*.java
 # Run
 java -cp out Main
 ```
+
+**From PowerShell (Windows):**
+```powershell
+# Compile all files
+javac -d out -sourcepath src src/Main.java
+
+# Run
+java -cp out Main
+```
+
+**Using IntelliJ IDEA:**
+
+1. Open project
+2. Right-click `Main.java`
+3. Select "Run 'Main.main()'"
+
 
 **Using IntelliJ IDEA:**
 
