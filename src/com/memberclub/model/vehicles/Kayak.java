@@ -2,6 +2,7 @@ package com.memberclub.model.vehicles;
 
 import com.memberclub.model.enums.Color;
 import com.memberclub.model.enums.ItemType;
+import com.memberclub.model.enums.KayakType;
 import com.memberclub.model.enums.Material;
 
 /**

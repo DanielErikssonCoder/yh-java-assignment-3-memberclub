@@ -1,4 +1,4 @@
-package com.memberclub.model.vehicles;
+package com.memberclub.model.enums;
 
 /**
  * Represents different types of kayaks.
