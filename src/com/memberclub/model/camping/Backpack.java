@@ -1,8 +1,9 @@
 package com.memberclub.model.camping;
 
-import com.memberclub.model.Color;
-import com.memberclub.model.ItemType;
-import com.memberclub.model.Material;
+import com.memberclub.model.enums.BackpackType;
+import com.memberclub.model.enums.Color;
+import com.memberclub.model.enums.ItemType;
+import com.memberclub.model.enums.Material;
 
 /**
  * Concrete class representing a backpack.

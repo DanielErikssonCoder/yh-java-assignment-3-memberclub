@@ -1,5 +1,9 @@
 package com.memberclub.model;
 
+import com.memberclub.model.enums.Color;
+import com.memberclub.model.enums.ItemStatus;
+import com.memberclub.model.enums.ItemType;
+
 /**
  * Abstract super class for all rental items.
  * Contains common attributes and behavior for all items in the inventory.

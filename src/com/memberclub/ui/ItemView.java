@@ -1,7 +1,7 @@
 package com.memberclub.ui;
 
 import com.memberclub.model.Item;
-import com.memberclub.model.ItemStatus;
+import com.memberclub.model.enums.ItemStatus;
 import com.memberclub.model.camping.CampingEquipment;
 import com.memberclub.model.fishing.FishingEquipment;
 import com.memberclub.model.vehicles.WaterVehicle;

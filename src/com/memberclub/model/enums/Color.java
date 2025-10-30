@@ -1,4 +1,4 @@
-package com.memberclub.model;
+package com.memberclub.model.enums;
 
 /**
  * This represents available colors for items.

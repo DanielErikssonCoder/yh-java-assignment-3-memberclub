@@ -1,6 +1,7 @@
 package com.memberclub.ui;
 
 import com.memberclub.model.*;
+import com.memberclub.model.enums.RentalPeriod;
 import com.memberclub.system.ClubSystem;
 import com.memberclub.ui.components.*;
 import com.memberclub.ui.validation.InputValidator;

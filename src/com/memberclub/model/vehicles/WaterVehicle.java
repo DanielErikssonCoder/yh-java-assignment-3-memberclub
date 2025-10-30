@@ -1,8 +1,8 @@
 package com.memberclub.model.vehicles;
 
 import com.memberclub.model.Item;
-import com.memberclub.model.Material;
-import com.memberclub.model.Color;
+import com.memberclub.model.enums.Material;
+import com.memberclub.model.enums.Color;
 
 /**
  * Abstract base class for all water vehicles.

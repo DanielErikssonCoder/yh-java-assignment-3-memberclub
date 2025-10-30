@@ -1,7 +1,7 @@
 package com.memberclub.model.vehicles;
 
-import com.memberclub.model.Color;
-import com.memberclub.model.Material;
+import com.memberclub.model.enums.Color;
+import com.memberclub.model.enums.Material;
 
 /**
  * Abstract base class for all boats.

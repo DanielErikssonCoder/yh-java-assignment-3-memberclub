@@ -1,4 +1,4 @@
-package com.memberclub.model.camping;
+package com.memberclub.model.enums;
 
 /**
  * This represents the season rating for camping equipment.

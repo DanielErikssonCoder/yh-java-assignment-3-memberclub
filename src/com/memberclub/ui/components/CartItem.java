@@ -1,7 +1,7 @@
 package com.memberclub.ui.components;
 
 import com.memberclub.model.Item;
-import com.memberclub.model.RentalPeriod;
+import com.memberclub.model.enums.RentalPeriod;
 
 /**
  * Represents a single item in the shopping cart before checkout

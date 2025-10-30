@@ -1,4 +1,4 @@
-package com.memberclub.model;
+package com.memberclub.model.enums;
 
 /**
  * Represents the billing period for a rental.

@@ -1,5 +1,7 @@
 package com.memberclub.model;
 
+import com.memberclub.model.enums.MembershipLevel;
+
 import java.util.ArrayList;
 import java.util.List;
 

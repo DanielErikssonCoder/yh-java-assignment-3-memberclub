@@ -1,8 +1,6 @@
 package com.memberclub.model.camping;
 
-import com.memberclub.model.Color;
-import com.memberclub.model.ItemType;
-import com.memberclub.model.Material;
+import com.memberclub.model.enums.*;
 
 /**
  * Concrete class representing a tent.

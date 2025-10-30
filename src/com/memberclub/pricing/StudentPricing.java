@@ -2,7 +2,7 @@ package com.memberclub.pricing;
 
 import com.memberclub.model.Item;
 import com.memberclub.model.Member;
-import com.memberclub.model.RentalPeriod;
+import com.memberclub.model.enums.RentalPeriod;
 
 /**
  * Student pricing strategy with 20% discount.

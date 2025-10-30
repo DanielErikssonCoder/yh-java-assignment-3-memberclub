@@ -1,6 +1,8 @@
 package com.memberclub.service;
 
 import com.memberclub.model.*;
+import com.memberclub.model.enums.ItemStatus;
+import com.memberclub.model.enums.RentalPeriod;
 import com.memberclub.pricing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

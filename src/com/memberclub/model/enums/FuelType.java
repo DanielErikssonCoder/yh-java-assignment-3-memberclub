@@ -1,4 +1,4 @@
-package com.memberclub.model;
+package com.memberclub.model.enums;
 
 /**
  * Represents fuel types for camping stoves and boats.

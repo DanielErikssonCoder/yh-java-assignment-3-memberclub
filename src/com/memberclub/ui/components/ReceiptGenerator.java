@@ -1,6 +1,7 @@
 package com.memberclub.ui.components;
 
 import com.memberclub.model.*;
+import com.memberclub.model.enums.RentalPeriod;
 import com.memberclub.ui.UIHelper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -2,7 +2,7 @@ package com.memberclub.pricing;
 
 import com.memberclub.model.Item;
 import com.memberclub.model.Member;
-import com.memberclub.model.RentalPeriod;
+import com.memberclub.model.enums.RentalPeriod;
 
 /**
  * Premium pricing strategy with 30% discount.

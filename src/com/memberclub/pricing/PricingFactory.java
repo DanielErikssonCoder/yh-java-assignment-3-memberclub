@@ -1,6 +1,6 @@
 package com.memberclub.pricing;
 
-import com.memberclub.model.MembershipLevel;
+import com.memberclub.model.enums.MembershipLevel;
 
 /**
  * Factory class that creates the appropriate pricing strategy

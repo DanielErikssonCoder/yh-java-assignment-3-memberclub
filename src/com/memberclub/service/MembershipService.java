@@ -1,6 +1,7 @@
 package com.memberclub.service;
 
 import com.memberclub.model.*;
+import com.memberclub.model.enums.MembershipLevel;
 import com.memberclub.system.MemberIdGenerator;
 import java.util.ArrayList;
 import java.util.List;

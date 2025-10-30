@@ -1,4 +1,4 @@
-package com.memberclub.model.fishing;
+package com.memberclub.model.enums;
 
 /**
  * This represents different size of fishing nets.

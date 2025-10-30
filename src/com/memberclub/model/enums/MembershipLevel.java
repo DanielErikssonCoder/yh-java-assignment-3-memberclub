@@ -1,4 +1,4 @@
-package com.memberclub.model;
+package com.memberclub.model.enums;
 
 /**
  * Represents the different membership levels available in the club.

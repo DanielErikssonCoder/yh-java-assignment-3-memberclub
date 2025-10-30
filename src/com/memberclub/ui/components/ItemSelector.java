@@ -2,6 +2,8 @@ package com.memberclub.ui.components;
 
 import com.memberclub.model.*;
 import com.memberclub.model.camping.*;
+import com.memberclub.model.enums.ItemStatus;
+import com.memberclub.model.enums.RentalPeriod;
 import com.memberclub.model.fishing.*;
 import com.memberclub.model.vehicles.*;
 import com.memberclub.system.ClubSystem;

@@ -2,7 +2,7 @@ package com.memberclub.ui.components;
 
 import com.memberclub.model.Item;
 import com.memberclub.model.Member;
-import com.memberclub.model.RentalPeriod;
+import com.memberclub.model.enums.RentalPeriod;
 import com.memberclub.ui.UIHelper;
 import com.memberclub.ui.validation.InputValidator;
 import java.util.ArrayList;

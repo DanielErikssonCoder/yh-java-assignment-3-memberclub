@@ -1,4 +1,4 @@
-package com.memberclub.model;
+package com.memberclub.model.enums;
 
 /**
  * This represents the current status of an item in the inventory.

@@ -1,4 +1,4 @@
-package com.memberclub.model.fishing;
+package com.memberclub.model.enums;
 
 /**
  * This represents different types of fishing rods.

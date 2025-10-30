@@ -1,9 +1,9 @@
 package com.memberclub.ui;
 
 import com.memberclub.model.Member;
-import com.memberclub.model.MembershipLevel;
+import com.memberclub.model.enums.MembershipLevel;
 import com.memberclub.model.Rental;
-import com.memberclub.model.RentalStatus;
+import com.memberclub.model.enums.RentalStatus;
 import com.memberclub.model.Item;
 import com.memberclub.system.ClubSystem;
 import com.memberclub.ui.components.ItemSelector;

@@ -1,8 +1,8 @@
 package com.memberclub.model.fishing;
 
 import com.memberclub.model.Item;
-import com.memberclub.model.Color;
-import com.memberclub.model.Material;
+import com.memberclub.model.enums.Color;
+import com.memberclub.model.enums.Material;
 
 /**
  * Abstract base class for all fishing equipment.

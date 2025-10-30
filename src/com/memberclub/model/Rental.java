@@ -1,5 +1,7 @@
 package com.memberclub.model;
 
+import com.memberclub.model.enums.RentalStatus;
+
 import java.time.LocalDate;
 
 /**
