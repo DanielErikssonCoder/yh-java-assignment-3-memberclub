@@ -267,10 +267,17 @@ ANSI codes for better UX. Clears between operations so menu doesn't scroll away.
 - Polymorphism (abstract methods, interface implementations)
 - Encapsulation (private fields, public interfaces)
 - Composition (services composed into ClubSystem)
-- Design patterns (Strategy, Factory, MVC)
+- Design patterns (Strategy)
 - Exception handling (custom exceptions, try-catch)
 - Collections (HashMap, ArrayList, List)
+
+### Additional Features (Beyond Requirements)
+
+- Factory pattern for pricing strategy selection
+- MVC architecture for scalability
+- Shopping cart system for better UX
 - Enums for type safety
+- Input validation utilities
 
 ---
 
