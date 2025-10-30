@@ -452,7 +452,7 @@ public class RentalView {
                 System.out.println();
                 System.out.println("Artikel: " + item.getId() + " - " + item.getName() + " (" + ItemSelector.getItemTypeDescription(item) + ")");
                 System.out.println("Medlem: " + member.getName() + " (" + member.getMembershipLevel() + ")");
-                System.out.println("Period: " + rental.getStartDate() + " → " + rental.getEndDate());
+                System.out.println("Period: " + rental.getStartDate() + " - " + rental.getEndDate());
                 System.out.printf("Betalt: %.2f kr%n", rental.getTotalCost());
             }
         }
