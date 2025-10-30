@@ -16,6 +16,7 @@ public class ClubSystem {
     private MemberRegistry memberRegistry;
     private RentalService rentalService;
     private MembershipService membershipService;
+    private RevenueService revenueService;
     private ItemIdGenerator itemIdGenerator;
     private MemberIdGenerator memberIdGenerator;
     private HashMap<String, User> users;
@@ -35,9 +36,10 @@ public class ClubSystem {
         this.memberRegistry = new MemberRegistry();
         this.rentalService = new RentalService(inventory, memberRegistry);
         this.membershipService = new MembershipService(memberRegistry, memberIdGenerator);
-
+        this.revenueService = new RevenueService();
         this.users = new HashMap<>();
 
+        // Load sample users
         loadUsers();
 
         // Load sample data using generators
@@ -60,6 +62,10 @@ public class ClubSystem {
 
     public MembershipService getMembershipService() {
         return membershipService;
+    }
+
+    public RevenueService getRevenueService() {
+        return revenueService;
     }
 
     public ItemIdGenerator getItemIdGenerator() {
@@ -132,10 +138,17 @@ public class ClubSystem {
      * @return true if removed, false if not found
      */
     public boolean removeUser(String username) {
+
+        // Check if user exists
         if (users.containsKey(username)) {
+
+            // Remove user from map
             users.remove(username);
             return true;
+
         } else {
+
+            // User not found
             return false;
         }
     }

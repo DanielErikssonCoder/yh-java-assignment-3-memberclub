@@ -2,6 +2,7 @@ package com.memberclub.ui;
 
 import com.memberclub.system.ClubSystem;
 import com.memberclub.model.User;
+import com.memberclub.ui.validation.InputValidator;
 import java.util.Scanner;
 
 /**
@@ -67,43 +68,8 @@ public class ConsoleMenu {
             System.out.println();
             System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
             System.out.println();
-            System.out.print("Välj alternativ: ");
 
-            // Read choice with validation
-            int choice = -1;
-
-            // Continue loop until user choose either 0,1,2
-            while (choice != 0 && choice != 1 && choice != 2) {
-
-                String input = scanner.nextLine().trim();
-
-                // Check if input is empty
-                if (input.isEmpty()) {
-                    System.out.println();
-                    System.out.println("Du måste ange ett val!");
-                    System.out.println();
-                    System.out.print("Välj alternativ: ");
-                    continue;
-                }
-
-                // Try to parse as integer
-                try {
-                    choice = Integer.parseInt(input);
-
-                    // Check if user choice is one of the valid options
-                    if (choice != 0 && choice != 1 && choice != 2) {
-                        System.out.println();
-                        System.out.println("Ogiltigt val! Välj 'Logga in', 'Skapa användare' eller 'Avsluta program'");
-                        System.out.println();
-                        System.out.print("Välj alternativ: ");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println();
-                    System.out.println("Ogiltigt val! Ange ett nummer.");
-                    System.out.println();
-                    System.out.print("Välj alternativ: ");
-                }
-            }
+            int choice = InputValidator.getIntInRange(scanner, 0, 2, "Välj alternativ: ");
 
             // Handle choice
             if (choice == 1) {
@@ -166,51 +132,23 @@ public class ConsoleMenu {
             usernameValid = true;
         }
 
-        // Get password
+        // Get password with validation
         String password = "";
         boolean passwordValid = false;
 
-        // Continue loop until valid password
         while (!passwordValid) {
             System.out.println();
-            System.out.print("Lösenord (minst 4 tecken): ");
-            password = scanner.nextLine().trim();
-
-            // Validate password length
-            if (password.length() < 4) {
+            password = InputValidator.getPassword(scanner, "Lösenord (minst 4 tecken): ", 4);
+            passwordValid = InputValidator.confirmPassword(scanner, password);
+            if (!passwordValid) {
                 System.out.println();
-                System.out.println("Lösenordet måste vara minst 4 tecken!");
-                continue;
+                System.out.println("Försök igen.");
             }
-
-            // Confirm password
-            System.out.println();
-            System.out.print("Bekräfta lösenord: ");
-            String confirmPassword = scanner.nextLine().trim();
-
-            // Check if passwords match
-            if (!password.equals(confirmPassword)) {
-                System.out.println();
-                System.out.println("Lösenorden matchar inte! Försök igen.");
-                continue;
-            }
-
-            passwordValid = true;
         }
 
         // Get full name
         System.out.println();
-        System.out.print("Fullständigt namn: ");
-        String fullName = scanner.nextLine().trim();
-
-        // Validate full name
-        while (fullName.isEmpty()) {
-            System.out.println();
-            System.out.println("Namnet kan inte vara tomt!");
-            System.out.println();
-            System.out.print("Fullständigt namn: ");
-            fullName = scanner.nextLine().trim();
-        }
+        String fullName = InputValidator.getNonEmptyString(scanner, "Fullständigt namn: ", "Namnet kan inte vara tomt!");
 
         // Create the user
         boolean userCreated = system.createUser(username, password, fullName);
@@ -336,7 +274,6 @@ public class ConsoleMenu {
         System.out.println();
         System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
         System.out.println();
-        System.out.print("Välj alternativ: ");
     }
 
     /**
@@ -360,51 +297,18 @@ public class ConsoleMenu {
             // Login
             currentUser = showLogin();
 
-            // Welcome message
             helper.clearScreen();
             System.out.println("Välkommen " + currentUser.getFullName() + "!");
             helper.pressEnterToContinue();
 
+            // Control variable for validation loop
             boolean loggedIn = true;
 
             // Continue loop until user logs out
             while (loggedIn) {
                 printMainMenu();
 
-                // Initialize a choice variable for the validation loop
-                int choice = -1;
-
-                // Continue loop until valid choice
-                while (choice < 0 || choice > 6) {
-                    String input = scanner.nextLine().trim();
-
-                    // Check if input is empty
-                    if (input.isEmpty()) {
-                        System.out.println();
-                        System.out.println("Du måste ange ett val!");
-                        System.out.println();
-                        System.out.print("Välj alternativ: ");
-                        continue;
-                    }
-
-                    // Try to parse input as integer
-                    try {
-                        choice = Integer.parseInt(input);
-
-                        // Validate that choice is within valid range
-                        if (choice < 0 || choice > 6) {
-                            System.out.println();
-                            System.out.println("Ogiltigt val! Ange ett nummer mellan 0-6.");
-                            System.out.println();
-                            System.out.print("Välj alternativ: ");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println();
-                        System.out.println("Ogiltigt val! Ange ett nummer.");
-                        System.out.println();
-                        System.out.print("Välj alternativ: ");
-                    }
-                }
+                int choice = InputValidator.getIntInRange(scanner, 0, 6, "Välj alternativ: ");
 
                 // Handle menu navigation - delegates to view classes
                 switch (choice) {

@@ -6,6 +6,7 @@ import com.memberclub.model.camping.CampingEquipment;
 import com.memberclub.model.fishing.FishingEquipment;
 import com.memberclub.model.vehicles.WaterVehicle;
 import com.memberclub.system.ClubSystem;
+import com.memberclub.ui.components.ItemSelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -100,7 +101,7 @@ public class ItemView {
      * Helper method to display individual item information
      */
     private void displayItemInfo(Item item) {
-        System.out.println("[" + item.getId() + "] - " + item.getName());
+        System.out.println("[" + item.getId() + "] - " + item.getName() + " (" + ItemSelector.getItemTypeDescription(item) + ")");
         System.out.printf("Pris: %.2f kr/timme | %.2f kr/dag%n", item.getPricePerHour(), item.getPricePerDay());
         System.out.println("Status: " + translateStatus(item.getStatus()));
         System.out.println();
