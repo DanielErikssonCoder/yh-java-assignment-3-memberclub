@@ -178,7 +178,7 @@ public class ItemSelector {
         System.out.println();
 
         // Get period choice from user
-        int choice = InputValidator.getIntInRange(scanner, 1, 2, "Period: ");
+        int choice = InputValidator.getIntInRange(scanner, 1, 2, "Periodtyp: ");
 
         // Return corresponding period type
         return (choice == 1) ? RentalPeriod.HOURLY : RentalPeriod.DAILY;
@@ -299,19 +299,19 @@ public class ItemSelector {
             System.out.println("Kajak (" + kayak.getKayakType() + ")");
             System.out.println("Kapacitet: " + kayak.getCapacity() + " personer | Längd: " + kayak.getLength() + "m");
 
-          // Display motor boat details
+            // Display motor boat details
         } else if (vehicle instanceof MotorBoat) {
             MotorBoat boat = (MotorBoat) vehicle;
             System.out.println("Motorbåt (" + boat.getEnginePower() + " hk)");
             System.out.println("Kapacitet: " + boat.getCapacity() + " personer | Längd: " + boat.getLength() + "m");
 
-          // Display electric boat details
+            // Display electric boat details
         } else if (vehicle instanceof ElectricBoat) {
             ElectricBoat boat = (ElectricBoat) vehicle;
             System.out.println("Elbåt (Max: " + boat.getMaxSpeed() + " km/h)");
             System.out.println("Kapacitet: " + boat.getCapacity() + " personer | Batteri: " + boat.getBatteryCapacity() + " kWh");
 
-          // Display row boat details
+            // Display row boat details
         } else if (vehicle instanceof RowBoat) {
             RowBoat boat = (RowBoat) vehicle;
             System.out.println("Roddbåt (" + boat.getOars() + " åror)");
@@ -331,25 +331,25 @@ public class ItemSelector {
             System.out.println("Typ: Tält (" + tent.getTentType() + ")");
             System.out.println("Kapacitet: " + tent.getCapacity() + " personer | Säsong: " + tent.getSeasonRating());
 
-          // Display backpack details
+            // Display backpack details
         } else if (camping instanceof Backpack) {
             Backpack backpack = (Backpack) camping;
             System.out.println("Typ: Ryggsäck (" + backpack.getBackpackType() + ")");
             System.out.println("Volym: " + backpack.getVolume() + "L | Tillverkare: " + backpack.getBrand());
 
-          // Display sleeping bag details
+            // Display sleeping bag details
         } else if (camping instanceof SleepingBag) {
             SleepingBag bag = (SleepingBag) camping;
             System.out.println("Typ: Sovsäck");
             System.out.println("Temperatur: " + bag.getTemperatureRating() + "°C | Säsong: " + bag.getSeasonRating());
 
-          // Display lantern details
+            // Display lantern details
         } else if (camping instanceof Lantern) {
             Lantern lantern = (Lantern) camping;
             System.out.println("Typ: Lykta");
             System.out.println("Ljusstyrka: " + lantern.getBrightness() + " lumens | Ström: " + lantern.getPowerSource());
 
-          // Display trangia kitchen details
+            // Display trangia kitchen details
         } else if (camping instanceof TrangiaKitchen) {
             TrangiaKitchen trangia = (TrangiaKitchen) camping;
             System.out.println("Typ: Trangiakök");
@@ -369,13 +369,13 @@ public class ItemSelector {
             System.out.println("Typ: Fiskespö (" + rod.getRodType() + ")");
             System.out.println("Längd: " + rod.getRodLength() + "m | Tillverkare: " + rod.getBrand());
 
-          // Display fishing net details
+            // Display fishing net details
         } else if (fishing instanceof FishingNet) {
             FishingNet net = (FishingNet) fishing;
             System.out.println("Typ: Fiskenät (" + net.getNetSize() + ")");
             System.out.println("Maskstorlek: " + net.getMeshSize() + "mm | Tillverkare: " + net.getBrand());
 
-          // Display fishing bait details
+            // Display fishing bait details
         } else if (fishing instanceof FishingBait) {
             FishingBait bait = (FishingBait) fishing;
             System.out.println("Typ: Bete (" + bait.getBaitType() + ")");

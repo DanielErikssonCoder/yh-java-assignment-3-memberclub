@@ -238,7 +238,7 @@ public class InputValidator {
               // Check if email format is valid
             } else if (!isValidEmail(email)) {
                 System.out.println();
-                System.out.println("Ogiltig emailadress! Använd formatet: exempel@domän.se");
+                System.out.println("Ogiltig email! Använd formatet: exempel@domän.se");
                 System.out.println();
                 System.out.print(prompt);
             } else {

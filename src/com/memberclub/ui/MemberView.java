@@ -2,7 +2,14 @@ package com.memberclub.ui;
 
 import com.memberclub.model.Member;
 import com.memberclub.model.MembershipLevel;
+import com.memberclub.model.Rental;
+import com.memberclub.model.RentalStatus;
+import com.memberclub.model.Item;
 import com.memberclub.system.ClubSystem;
+import com.memberclub.ui.components.ItemSelector;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,6 +44,8 @@ public class MemberView {
         System.out.println("[1] Visa alla medlemmar");
         System.out.println("[2] Lägg till medlem");
         System.out.println("[3] Ta bort medlem");
+        System.out.println("[4] Visa historik");
+        System.out.println();
         System.out.println("[0] Gå tillbaka");
         System.out.println();
         System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
@@ -47,7 +56,7 @@ public class MemberView {
         int choice = -1;
 
         // Continue loop until valid choice
-        while (choice < 0 || choice > 3) {
+        while (choice < 0 || choice > 4) {
 
             String input = scanner.nextLine().trim();
 
@@ -65,9 +74,9 @@ public class MemberView {
                 choice = Integer.parseInt(input);
 
                 // Validate range after parsing
-                if (choice < 0 || choice > 3) {
+                if (choice < 0 || choice > 4) {
                     System.out.println();
-                    System.out.println("Ogiltigt val! Ange ett nummer mellan 0-3.");
+                    System.out.println("Ogiltigt val! Ange ett nummer mellan 0-4.");
                     System.out.println();
                     System.out.print("Välj alternativ: ");
                 }
@@ -84,6 +93,7 @@ public class MemberView {
             case 1 -> viewAllMembers();
             case 2 -> addMember();
             case 3 -> removeMember();
+            case 4 -> viewMemberHistory();
             case 0 -> {} // Go back
         }
     }
@@ -385,6 +395,199 @@ public class MemberView {
             helper.clearScreen();
             System.out.println("Borttagning avbruten.");
         }
+        helper.pressEnterToContinue();
+    }
+
+    /**
+     * View member rental history
+     */
+    private void viewMemberHistory() {
+        helper.clearScreen();
+        helper.printHeader("        MEDLEMSHISTORIK");
+
+        // Get all members from registry
+        List<Member> allMembers = system.getMemberRegistry().getAllMembers();
+
+        // Check if member registry is empty
+        if (allMembers.isEmpty()) {
+            System.out.println("Inga medlemmar finns i systemet!");
+            helper.pressEnterToContinue();
+            return;
+        }
+
+        // Display all members
+        System.out.println("Välj medlem:");
+        System.out.println();
+
+        // Display each member with index number
+        for (int i = 0; i < allMembers.size(); i++) {
+            Member member = allMembers.get(i);
+            System.out.println("[" + (i + 1) + "] " + member.getName() + " (" + member.getMembershipLevel() + ")");
+        }
+
+        System.out.println();
+        System.out.println("[0] Avbryt");
+        System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+        System.out.print("Välj medlem: ");
+
+        // Initialize choice for validation loop
+        int choice = -1;
+
+        // Continue loop until valid choice
+        while (choice < 0 || choice > allMembers.size()) {
+            String input = scanner.nextLine().trim();
+
+            // Check if input is empty
+            if (input.isEmpty()) {
+                System.out.println();
+                System.out.println("Du måste ange ett val!");
+                System.out.println();
+                System.out.print("Välj medlem: ");
+                continue;
+            }
+
+            // Try to parse input as integer
+            try {
+                choice = Integer.parseInt(input);
+
+                // Validate that choice is within valid range
+                if (choice < 0 || choice > allMembers.size()) {
+                    System.out.println();
+                    System.out.println("Ogiltigt val! Ange ett nummer mellan 0-" + allMembers.size() + ".");
+                    System.out.println();
+                    System.out.print("Välj medlem: ");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println();
+                System.out.println("Ogiltigt val! Ange ett nummer.");
+                System.out.println();
+                System.out.print("Välj medlem: ");
+            }
+        }
+
+        // Check if the user wants to cancel
+        if (choice == 0) {
+            return;
+        }
+
+        // Get selected member
+        Member selectedMember = allMembers.get(choice - 1);
+
+        // Display member's rental history
+        displayHistory(selectedMember);
+    }
+
+    /**
+     * Display rental history for a specific member
+     */
+    private void displayHistory(Member member) {
+        helper.clearScreen();
+        helper.printHeader("   HISTORIK: " + member.getName());
+
+        // Get member's rental IDs
+        List<String> rentalIds = member.getRentalHistory();
+
+        // Check if member has no rental history
+        if (rentalIds.isEmpty()) {
+            System.out.println("Denna medlem har ingen uthyrningshistorik.");
+            System.out.println();
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+            helper.pressEnterToContinue();
+            return;
+        }
+
+        // Get actual Rental objects from RentalService
+        List<Rental> history = new ArrayList<>();
+        for (String rentalId : rentalIds) {
+            Rental rental = system.getRentalService().getRental(rentalId);
+
+            // Add to history if found
+            if (rental != null) {
+                history.add(rental);
+            }
+        }
+
+        System.out.println("Totalt antal uthyrningar: " + history.size());
+        System.out.println();
+
+        // Count completed rentals without delays
+        long onTimeReturns = history.stream().filter(r -> r.getStatus() == RentalStatus.COMPLETED).filter(r -> !r.getEndDate().isAfter(r.getExpectedReturnDate())).count();
+
+        // Count delayed returns
+        long delayedReturns = history.stream().filter(r -> r.getStatus() == RentalStatus.COMPLETED).filter(r -> r.getEndDate().isAfter(r.getExpectedReturnDate())).count();
+
+        System.out.println("Returnerat i tid: " + onTimeReturns + " st");
+        System.out.println("Försenade returer: " + delayedReturns + " st");
+        System.out.println("Aktiva uthyrningar: " + history.stream().filter(Rental::isActive).count() + " st");
+        System.out.println();
+        helper.printDivider();
+
+        // Display each rental in history
+        for (int i = 0; i < history.size(); i++) {
+
+            // Get current rental
+            Rental rental = history.get(i);
+
+            // Get item from inventory
+            Item item = system.getInventory().getItem(rental.getItemId());
+            String itemName = (item != null) ? item.getName() : "Okänd artikel";
+
+            System.out.println();
+            System.out.println("Uthyrning #" + (i + 1));
+            System.out.println("Artikel-ID: " + rental.getItemId());
+
+            // Display item information
+            if (item != null) {
+                System.out.println("Artikel: " + itemName + " (" + ItemSelector.getItemTypeDescription(item) + ")");
+
+            } else {
+                System.out.println("Artikel: " + itemName);
+            }
+
+            System.out.println("Startdatum: " + rental.getStartDate());
+            System.out.println("Förväntad retur: " + rental.getExpectedReturnDate());
+
+            // Show actual return date and status
+            if (rental.getStatus() == RentalStatus.COMPLETED) {
+                System.out.println("Faktisk retur: " + rental.getEndDate());
+
+                // Check if returned on time
+                if (rental.getEndDate().isAfter(rental.getExpectedReturnDate())) {
+
+                    // Calculate days late
+                    long daysLate = ChronoUnit.DAYS.between(rental.getExpectedReturnDate(), rental.getEndDate());
+                    System.out.println("Status: FÖRSENING (" + daysLate + " dag" + (daysLate > 1 ? "ar" : "") + ")");
+
+                } else {
+                    System.out.println("Status: RETURNERAD I TID");
+                }
+            } else if (rental.getStatus() == RentalStatus.ACTIVE) {
+                System.out.println("Status: PÅGÅENDE UTHYRNING");
+
+                // Check if overdue
+                LocalDate today = LocalDate.now();
+                if (today.isAfter(rental.getExpectedReturnDate())) {
+
+                    // Calculate days overdue
+                    long daysOverdue = ChronoUnit.DAYS.between(rental.getExpectedReturnDate(), today);
+                    System.out.println("FÖRSENAD! (" + daysOverdue + " dag" + (daysOverdue > 1 ? "ar" : "") + " sen)");
+                }
+            } else if (rental.getStatus() == RentalStatus.CANCELLED) {
+                System.out.println("Status: AVBRUTEN");
+            }
+
+            // Display rental cost
+            System.out.println("Kostnad: " + String.format("%.2f", rental.getTotalCost()) + " kr");
+
+            // Add divider between rentals
+            if (i < history.size() - 1) {
+                System.out.println();
+                helper.printDivider();
+            }
+        }
+
+        System.out.println();
+        System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
         helper.pressEnterToContinue();
     }
 }

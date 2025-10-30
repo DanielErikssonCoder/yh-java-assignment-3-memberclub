@@ -224,7 +224,7 @@ public class RentalView {
             // Same period for all
             helper.clearScreen();
             System.out.println();
-            System.out.println("Välj period för samtliga artiklar");
+            System.out.println("Välj periodtyp för samtliga artiklar");
 
             // Get rental period
             RentalPeriod period = itemSelector.selectPeriod();

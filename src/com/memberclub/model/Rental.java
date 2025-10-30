@@ -62,6 +62,10 @@ public class Rental {
         return endDate;
     }
 
+    public LocalDate getExpectedReturnDate() {
+        return expectedReturnDate;
+    }
+
     public double getTotalCost() {
         return totalCost;
     }

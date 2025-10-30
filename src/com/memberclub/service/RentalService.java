@@ -156,4 +156,24 @@ public class RentalService {
         // Return the complete rentals list
         return rentals;
     }
+
+    /**
+     * Finds and returns a specific rental by ID.
+     * @param rentalId the ID of the rental to find
+     * @return the Rental object, or null if not found
+     */
+    public Rental getRental(String rentalId) {
+
+        // Loop through all rentals to find matching ID
+        for (Rental rental : rentals) {
+
+            // Check if current rental ID matches the search ID
+            if (rental.getRentalId().equals(rentalId)) {
+                return rental;
+            }
+        }
+
+        // Return null if not found
+        return null;
+    }
 }
