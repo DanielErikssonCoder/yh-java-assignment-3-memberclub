@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class MembershipService {
 
-    private MemberRegistry memberRegistry;
-    private MemberIdGenerator memberIdGenerator;
+    private final MemberRegistry memberRegistry;
+    private final MemberIdGenerator memberIdGenerator;
 
     /**
      * Creates a MembershipService with access to the member registry and ID generator

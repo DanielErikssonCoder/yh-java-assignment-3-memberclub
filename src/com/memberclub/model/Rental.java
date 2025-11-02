@@ -11,13 +11,13 @@ import java.time.LocalDate;
  */
 public class Rental {
 
-    private String rentalId;
-    private int memberId;
-    private String itemId;
-    private LocalDate startDate;
-    private LocalDate expectedReturnDate;
+    private final String rentalId;
+    private final int memberId;
+    private final String itemId;
+    private final LocalDate startDate;
+    private final LocalDate expectedReturnDate;
     private LocalDate endDate;
-    private double totalCost;
+    private final double totalCost;
     private RentalStatus status;
 
     /**

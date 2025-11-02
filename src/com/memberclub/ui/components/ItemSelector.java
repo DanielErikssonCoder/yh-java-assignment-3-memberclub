@@ -19,9 +19,9 @@ import java.util.Scanner;
  * Separates item selection logic from rental processing.
  */
 public class ItemSelector {
-    private Scanner scanner;
-    private ClubSystem system;
-    private UIHelper helper;
+    private final Scanner scanner;
+    private final ClubSystem system;
+    private final UIHelper helper;
 
     /**
      * Creates a new item selector.

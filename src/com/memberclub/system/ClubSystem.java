@@ -12,14 +12,14 @@ import java.util.List;
  */
 public class ClubSystem {
 
-    private Inventory inventory;
-    private MemberRegistry memberRegistry;
-    private RentalService rentalService;
-    private MembershipService membershipService;
-    private RevenueService revenueService;
-    private ItemIdGenerator itemIdGenerator;
-    private MemberIdGenerator memberIdGenerator;
-    private HashMap<String, User> users;
+    private final Inventory inventory;
+    private final MemberRegistry memberRegistry;
+    private final RentalService rentalService;
+    private final MembershipService membershipService;
+    private final RevenueService revenueService;
+    private final ItemIdGenerator itemIdGenerator;
+    private final MemberIdGenerator memberIdGenerator;
+    private final HashMap<String, User> users;
 
     /**
      * Creates and initializes the complete club system.

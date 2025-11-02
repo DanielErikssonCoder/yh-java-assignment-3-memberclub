@@ -4,6 +4,7 @@ import com.memberclub.model.*;
 import com.memberclub.service.RevenueService;
 import com.memberclub.system.ClubSystem;
 import com.memberclub.ui.ItemView;
+import com.memberclub.ui.MemberView;
 import com.memberclub.ui.UIHelper;
 import com.memberclub.ui.validation.InputValidator;
 import java.util.ArrayList;
@@ -287,7 +288,7 @@ public class ReturnHandler {
         // Show confirmation with item summary
         helper.clearScreen();
         helper.printHeader("       BEKRÄFTA RETURNERING");
-        System.out.println("Medlem: " + selectedMember.getName());
+        System.out.println("Medlem: " + MemberView.formatMemberShort(selectedMember));
         System.out.println();
         System.out.println("Du är på väg att returnera följande artiklar:");
         System.out.println();
@@ -423,7 +424,7 @@ public class ReturnHandler {
             Member member = system.getMemberRegistry().getMember(rental.getMemberId());
 
             System.out.println(ItemView.formatItemForList(i + 1, item));
-            System.out.println("Medlem: " + member.getName());
+            System.out.println("Medlem: " + MemberView.formatMemberShort(member));
             System.out.println("Hyrd: " + rental.getStartDate());
             System.out.printf("Pris: %.2f kr%n", rental.getTotalCost());
             System.out.println();

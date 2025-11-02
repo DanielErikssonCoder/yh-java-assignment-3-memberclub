@@ -19,9 +19,9 @@ import java.util.Scanner;
  */
 public class MemberView {
 
-    private Scanner scanner;
-    private ClubSystem system;
-    private UIHelper helper;
+    private final Scanner scanner;
+    private final ClubSystem system;
+    private final UIHelper helper;
 
     /**
      * Creates a new member view.
@@ -177,7 +177,7 @@ public class MemberView {
         helper.printHeader("        LÄGG TILL MEDLEM");
 
         // Get name
-        System.out.print("Namn: ");
+        System.out.print("Namn (för- och efternamn): ");
         String name = scanner.nextLine().trim();
 
         // Validation loop to check for empty name input
@@ -185,7 +185,7 @@ public class MemberView {
             System.out.println();
             System.out.println("Namnet kan inte vara tomt!");
             System.out.println();
-            System.out.print("Namn: ");
+            System.out.print("Namn (för- och efternamn): ");
             name = scanner.nextLine().trim();
         }
 
@@ -589,5 +589,19 @@ public class MemberView {
         System.out.println();
         System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
         helper.pressEnterToContinue();
+    }
+
+    /**
+     * Format member with ID and membership level.
+     */
+    public static String formatMemberFull(Member member) {
+        return member.getName() + " [ID: " + member.getId() + "] (" + member.getMembershipLevel() + ")";
+    }
+
+    /**
+     * Format member without membership level.
+     */
+    public static String formatMemberShort(Member member) {
+        return member.getName() + " [ID: " + member.getId() + "]";
     }
 }

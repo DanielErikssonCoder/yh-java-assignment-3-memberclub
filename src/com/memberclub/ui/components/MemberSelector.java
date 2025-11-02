@@ -12,9 +12,9 @@ import java.util.Scanner;
  */
 public class MemberSelector {
 
-    private Scanner scanner;
-    private ClubSystem system;
-    private UIHelper helper;
+    private final Scanner scanner;
+    private final ClubSystem system;
+    private final UIHelper helper;
 
     /**
      * Creates a new member selector.

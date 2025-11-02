@@ -16,9 +16,9 @@ import java.util.Scanner;
  */
 public class ShoppingCart {
 
-    private List<CartItem> items;
-    private Scanner scanner;
-    private UIHelper helper;
+    private final List<CartItem> items;
+    private final Scanner scanner;
+    private final UIHelper helper;
 
     /**
      * Creates a new shopping cart
@@ -56,6 +56,20 @@ public class ShoppingCart {
      */
     public void addAll(List<CartItem> cartItems) {
         items.addAll(cartItems);
+    }
+
+    /**
+     * Checks if an item is already in the cart.
+     * @param item the item to check
+     * @return true if item is in cart, false otherwise
+     */
+    public boolean containsItem(Item item) {
+        for (CartItem cartItem : items) {
+            if (cartItem.getItem().getId() == item.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class RentalService {
 
-    private Inventory inventory;
-    private MemberRegistry memberRegistry;
-    private List<Rental> rentals;
+    private final Inventory inventory;
+    private final MemberRegistry memberRegistry;
+    private final List<Rental> rentals;
     private int rentalCounter;
 
     /**

@@ -8,10 +8,10 @@ import com.memberclub.model.enums.RentalPeriod;
  * Contains item, rental duration, period type, and calculated price
  */
 public class CartItem {
-    private Item item;
-    private int duration;
-    private RentalPeriod period;
-    private double price;
+    private final Item item;
+    private final int duration;
+    private final RentalPeriod period;
+    private final double price;
 
     /**
      * Creates a new cart item

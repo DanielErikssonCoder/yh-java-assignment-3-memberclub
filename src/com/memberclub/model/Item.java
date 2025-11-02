@@ -10,7 +10,7 @@ import com.memberclub.model.enums.ItemType;
  */
 public abstract class Item {
 
-    private String id;
+    private final String id;
     private String name;
     private double pricePerDay;
     private double pricePerHour;

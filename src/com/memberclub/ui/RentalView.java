@@ -16,16 +16,16 @@ import java.util.Scanner;
  */
 public class RentalView {
 
-    private Scanner scanner;
-    private ClubSystem system;
-    private UIHelper helper;
-    private RevenueService revenueService;
+    private final Scanner scanner;
+    private final ClubSystem system;
+    private final UIHelper helper;
+    private final RevenueService revenueService;
 
     // Component classes
-    private ItemSelector itemSelector;
-    private MemberSelector memberSelector;
-    private ReceiptGenerator receiptGenerator;
-    private ReturnHandler returnHandler;
+    private final ItemSelector itemSelector;
+    private final MemberSelector memberSelector;
+    private final ReceiptGenerator receiptGenerator;
+    private final ReturnHandler returnHandler;
 
     /**
      * Creates a new rental view.
@@ -67,7 +67,7 @@ public class RentalView {
         while (continueShopping) {
             helper.clearScreen();
             helper.printHeader("           HYRA ARTIKEL");
-            System.out.println("Medlem: " + selectedMember.getName() + " (" + selectedMember.getMembershipLevel() + ")");
+            System.out.println("Medlem: " + MemberView.formatMemberFull(selectedMember));
             System.out.println("Artiklar i kundvagn: " + cart.size() + " st");
             System.out.println();
             helper.printDivider();
@@ -99,24 +99,61 @@ public class RentalView {
 
                     // Check if item was added successfully
                     if (cartItem != null) {
-                        cart.addCartItem(cartItem);
-                        System.out.println();
-                        System.out.println("Artikel tillagd i kundvagnen!");
-                        helper.pressEnterToContinue();
+
+                        // Check if item already in cart
+                        if (cart.containsItem(cartItem.getItem())) {
+                            System.out.println();
+                            System.out.println("Denna artikel finns redan i kundvagnen!");
+                            helper.pressEnterToContinue();
+                        } else {
+                            cart.addCartItem(cartItem);
+                            System.out.println();
+                            System.out.println("Artikel tillagd i kundvagnen!");
+                            helper.pressEnterToContinue();
+                        }
                     }
                 }
                 case 2 -> {
 
                     // Add multiple items
                     List<CartItem> items = addMultipleItems(selectedMember);
-                    cart.addAll(items);
 
-                    // Display confirmation if items were added
-                    if (!items.isEmpty()) {
-                        helper.clearScreen();
-                        System.out.println(items.size() + " artiklar tillagda i kundvagnen!");
-                        helper.pressEnterToContinue();
+                    // Filter out items already in cart
+                    List<CartItem> itemsToAdd = new ArrayList<>();
+                    List<String> alreadyInCart = new ArrayList<>();
+
+                    // Check each selected item against cart
+                    for (CartItem item : items) {
+
+                        // If item already exists in cart, add to skip list
+                        if (cart.containsItem(item.getItem())) {
+                            alreadyInCart.add(item.getItem().getName());
+
+                        } else {
+
+                            // Item not in cart, add to list of items to add
+                            itemsToAdd.add(item);
+                        }
                     }
+
+                    cart.addAll(itemsToAdd);
+
+                    helper.clearScreen();
+
+                    // Show success message if any items were added
+                    if (!itemsToAdd.isEmpty()) {
+                        System.out.println(itemsToAdd.size() + " artiklar tillagda i kundvagnen!");
+                    }
+
+                    // Show warning message if any items were skipped
+                    if (!alreadyInCart.isEmpty()) {
+                        System.out.println();
+                        System.out.println("Följande artiklar fanns redan i kundvagnen och hoppades över:");
+                        for (String name : alreadyInCart) {
+                            System.out.println("- " + name);
+                        }
+                    }
+                    helper.pressEnterToContinue();
                 }
                 case 3 -> {
 
@@ -277,7 +314,7 @@ public class RentalView {
     private void checkout(ShoppingCart cart, Member member) {
         helper.clearScreen();
         helper.printHeader("        BEKRÄFTA BESTÄLLNING");
-        System.out.println("Medlem: " + member.getName() + " (" + member.getMembershipLevel() + ")");
+        System.out.println("Medlem: " + MemberView.formatMemberFull(member));
         System.out.println();
         helper.printDivider();
         System.out.println();
@@ -420,7 +457,7 @@ public class RentalView {
                 // Display rental information
                 System.out.println();
                 System.out.println(ItemView.formatItemFull(item));
-                System.out.println("Medlem: " + member.getName() + " (" + member.getMembershipLevel() + ")");
+                System.out.println("Medlem: " + MemberView.formatMemberFull(member));
                 System.out.println("Hyrd från: " + rental.getStartDate());
                 System.out.printf("Pris: %.2f kr%n", rental.getTotalCost());
             }
@@ -450,7 +487,7 @@ public class RentalView {
                 // Display rental information
                 System.out.println();
                 System.out.println(ItemView.formatItemFull(item));
-                System.out.println("Medlem: " + member.getName() + " (" + member.getMembershipLevel() + ")");
+                System.out.println("Medlem: " + MemberView.formatMemberFull(member));
                 System.out.println("Period: " + rental.getStartDate() + " - " + rental.getEndDate());
                 System.out.printf("Betalt: %.2f kr%n", rental.getTotalCost());
             }

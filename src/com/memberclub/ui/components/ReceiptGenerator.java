@@ -3,6 +3,7 @@ package com.memberclub.ui.components;
 import com.memberclub.model.*;
 import com.memberclub.model.enums.RentalPeriod;
 import com.memberclub.ui.ItemView;
+import com.memberclub.ui.MemberView;
 import com.memberclub.ui.UIHelper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,8 +16,8 @@ import java.util.Scanner;
  */
 public class ReceiptGenerator {
 
-    private UIHelper helper;
-    private Scanner scanner;
+    private final UIHelper helper;
+    private final Scanner scanner;
 
     /**
      * Creates a new receipt generator.
@@ -37,7 +38,7 @@ public class ReceiptGenerator {
     public void displayRentalReceipt(List<CartItem> cart, Member member, double totalBeforeDiscount) {
         helper.clearScreen();
         helper.printHeader("         ORDERBEKRÄFTELSE");
-        System.out.println("Medlem: " + member.getName() + " (" + member.getMembershipLevel() + ")");
+        System.out.println("Medlem: " + MemberView.formatMemberFull(member));
         System.out.println();
         helper.printDivider();
         System.out.println();
@@ -162,7 +163,7 @@ public class ReceiptGenerator {
         helper.clearScreen();
         helper.printHeader("        ARTIKEL RETURNERAD");
         System.out.println(ItemView.formatItemFull(item));
-        System.out.println("Medlem: " + member.getName());
+        System.out.println("Medlem: " + MemberView.formatMemberShort(member));
         System.out.println("Hyrd från: " + rental.getStartDate());
 
         // Get current time as actual return date

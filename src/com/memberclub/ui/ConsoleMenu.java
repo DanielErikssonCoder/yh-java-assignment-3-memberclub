@@ -13,15 +13,15 @@ import java.nio.charset.StandardCharsets;
  */
 public class ConsoleMenu {
 
-    private Scanner scanner;
-    private ClubSystem system;
+    private final Scanner scanner;
+    private final ClubSystem system;
     private User currentUser;
-    private UIHelper helper;
+    private final UIHelper helper;
 
     // View classes
-    private RentalView rentalView;
-    private ItemView itemView;
-    private MemberView memberView;
+    private final RentalView rentalView;
+    private final ItemView itemView;
+    private final MemberView memberView;
 
     /**
      * Creates a new console menu.

@@ -13,7 +13,7 @@ import java.util.List;
 public class Inventory {
 
     // Map for ID-based lookup: itemId -> Item
-    private Map<String, Item> items;
+    private final Map<String, Item> items;
 
     /**
      * Creates an empty inventory.

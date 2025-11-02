@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
  */
 public class UIHelper {
 
-    private Scanner scanner;
-    private BufferedReader reader;
+    private final Scanner scanner;
+    private final BufferedReader reader;
 
     // ANSI color codes
     public static final String GREEN = "\033[38;5;35m";

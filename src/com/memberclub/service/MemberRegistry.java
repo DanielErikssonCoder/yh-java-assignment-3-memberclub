@@ -13,7 +13,7 @@ import java.util.List;
 public class MemberRegistry {
 
     // Map for ID-based lookup: memberId -> Member
-    private Map<Integer, Member> members;
+    private final Map<Integer, Member> members;
 
     /**
      * Creates an empty member registry.

@@ -6,9 +6,9 @@ package com.memberclub.model;
  */
 public class User {
 
-    private String username;
-    private String password;
-    private String fullName;
+    private final String username;
+    private final String password;
+    private final String fullName;
 
     /**
      * Creates a new user with the specified credentials.

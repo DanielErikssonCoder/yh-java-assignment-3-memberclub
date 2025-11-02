@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class Member {
 
-    private int id;
+    private final int id;
     private String name;
     private String email;
     private String phone;
     private MembershipLevel membershipLevel;
-    private List<String> rentalHistory;
+    private final List<String> rentalHistory;
 
     /**
      * Constructor that creates a new member with the given information.
