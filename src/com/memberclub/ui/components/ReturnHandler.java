@@ -3,6 +3,7 @@ package com.memberclub.ui.components;
 import com.memberclub.model.*;
 import com.memberclub.service.RevenueService;
 import com.memberclub.system.ClubSystem;
+import com.memberclub.ui.ItemView;
 import com.memberclub.ui.UIHelper;
 import com.memberclub.ui.validation.InputValidator;
 import java.util.ArrayList;
@@ -100,6 +101,27 @@ public class ReturnHandler {
 
         // Get selected rental
         Rental rental = activeRentals.get(choice - 1);
+        Item item = system.getInventory().getItem(rental.getItemId());
+
+        helper.clearScreen();
+        helper.printHeader("       BEKRÄFTA RETURNERING");
+        System.out.println("Du är på väg att returnera följande artikel:");
+        System.out.println();
+        System.out.println(ItemView.formatItemForList(1, item));
+        System.out.println();
+        helper.printDivider();
+        System.out.println();
+
+        // Get user confirmation
+        boolean confirmed = InputValidator.getYesNoConfirmation(scanner, "Vill du genomföra returneringen? (Ja/Nej): ");
+
+        // Check if user cancelled
+        if (!confirmed) {
+            System.out.println();
+            System.out.println("Returnering avbruten.");
+            helper.pressEnterToContinue();
+            return;
+        }
 
         // Process the return
         processReturn(rental);
@@ -159,6 +181,33 @@ public class ReturnHandler {
             return;
         }
 
+        helper.clearScreen();
+        helper.printHeader("       BEKRÄFTA RETURNERING");
+        System.out.println("Du är på väg att returnera följande artiklar:");
+        System.out.println();
+
+        // Display selected items
+        for (int i = 0; i < toReturn.size(); i++) {
+            Rental rental = toReturn.get(i);
+            Item item = system.getInventory().getItem(rental.getItemId());
+            System.out.println(ItemView.formatItemForList(i + 1, item));
+        }
+
+        System.out.println();
+        helper.printDivider();
+        System.out.println();
+
+        // Get user confirmation
+        boolean confirmed = InputValidator.getYesNoConfirmation(scanner, "Vill du genomföra returneringen? (Ja/Nej): ");
+
+        // Check if user cancelled
+        if (!confirmed) {
+            System.out.println();
+            System.out.println("Returnering avbruten.");
+            helper.pressEnterToContinue();
+            return;
+        }
+
         // Process bulk return
         processReturnBulk(toReturn);
     }
@@ -170,19 +219,103 @@ public class ReturnHandler {
     private void returnAllItems(List<Rental> activeRentals) {
         helper.clearScreen();
         helper.printHeader("       RETURNERA ALLT");
-        System.out.println("Returnera " + activeRentals.size() + " artiklar?");
+
+        // Group rentals by member
+        List<Member> membersWithRentals = new ArrayList<>();
+        for (Rental rental : activeRentals) {
+            Member member = system.getMemberRegistry().getMember(rental.getMemberId());
+
+            // Add member only if not already in list
+            if (!membersWithRentals.contains(member)) {
+                membersWithRentals.add(member);
+            }
+        }
+
+        Member selectedMember;
+
+        // If only one member, select automatically
+        if (membersWithRentals.size() == 1) {
+            selectedMember = membersWithRentals.get(0);
+        } else {
+            // Multiple members - let user choose
+            System.out.println("Välj medlem:");
+            System.out.println();
+
+            // Display each member with their rental count
+            for (int i = 0; i < membersWithRentals.size(); i++) {
+                Member member = membersWithRentals.get(i);
+                int rentalCount = 0;
+
+                // Count how many rentals belong to this member
+                for (Rental rental : activeRentals) {
+
+                    // Check if rental belongs to current member
+                    if (rental.getMemberId() == member.getId()) {
+                        rentalCount++;
+                    }
+                }
+                System.out.println("[" + (i + 1) + "] " + member.getName() + " (" + rentalCount + " artiklar)");
+            }
+
+            System.out.println();
+            System.out.println("[0] Avbryt");
+            System.out.println();
+            System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+            System.out.println();
+
+            // Get user choice
+            int choice = InputValidator.getIntInRange(scanner, 0, membersWithRentals.size(), "Välj medlem: ");
+
+            // Check if user cancelled
+            if (choice == 0) {
+                return;
+            }
+
+            selectedMember = membersWithRentals.get(choice - 1);
+        }
+
+        // Filter rentals for selected member
+        List<Rental> memberRentals = new ArrayList<>();
+        for (Rental rental : activeRentals) {
+
+            // Add rental if it belongs to selected member
+            if (rental.getMemberId() == selectedMember.getId()) {
+                memberRentals.add(rental);
+            }
+        }
+
+        // Show confirmation with item summary
+        helper.clearScreen();
+        helper.printHeader("       BEKRÄFTA RETURNERING");
+        System.out.println("Medlem: " + selectedMember.getName());
+        System.out.println();
+        System.out.println("Du är på väg att returnera följande artiklar:");
+        System.out.println();
+
+        // Display all items
+        for (int i = 0; i < memberRentals.size(); i++) {
+            Rental rental = memberRentals.get(i);
+            Item item = system.getInventory().getItem(rental.getItemId());
+            System.out.println(ItemView.formatItemForList(i + 1, item));
+        }
+
+        System.out.println();
+        helper.printDivider();
         System.out.println();
 
         // Get user confirmation
-        boolean confirmed = InputValidator.getYesNoConfirmation(scanner, "Bekräfta (Ja/Nej): ");
+        boolean confirmed = InputValidator.getYesNoConfirmation(scanner, "Vill du genomföra returneringen? (Ja/Nej): ");
 
         // Check if user cancelled
         if (!confirmed) {
+            System.out.println();
+            System.out.println("Returnering avbruten.");
+            helper.pressEnterToContinue();
             return;
         }
 
-        // Process bulk return
-        processReturnBulk(activeRentals);
+        // Process bulk return for selected member
+        processReturnBulk(memberRentals);
     }
 
     /**
@@ -289,7 +422,7 @@ public class ReturnHandler {
             Item item = system.getInventory().getItem(rental.getItemId());
             Member member = system.getMemberRegistry().getMember(rental.getMemberId());
 
-            System.out.println("[" + (i + 1) + "] " + item.getName());
+            System.out.println(ItemView.formatItemForList(i + 1, item));
             System.out.println("Medlem: " + member.getName());
             System.out.println("Hyrd: " + rental.getStartDate());
             System.out.printf("Pris: %.2f kr%n", rental.getTotalCost());

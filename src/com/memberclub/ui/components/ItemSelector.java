@@ -7,6 +7,7 @@ import com.memberclub.model.enums.RentalPeriod;
 import com.memberclub.model.fishing.*;
 import com.memberclub.model.vehicles.*;
 import com.memberclub.system.ClubSystem;
+import com.memberclub.ui.ItemView;
 import com.memberclub.ui.UIHelper;
 import com.memberclub.ui.validation.InputValidator;
 import java.util.ArrayList;
@@ -255,7 +256,7 @@ public class ItemSelector {
             Item item = items.get(i);
 
             // Display item number and name
-            System.out.println("[" + (i + 1) + "] " + item.getName());
+            System.out.println(ItemView.formatItemForList(i + 1, item));
 
             // Display type-specific details
             displayItemDetails(item);
@@ -293,30 +294,25 @@ public class ItemSelector {
      * @param vehicle the water vehicle
      */
     private void displayWaterVehicleDetails(WaterVehicle vehicle) {
-        System.out.print("Typ: ");
 
         // Display kayak details
         if (vehicle instanceof Kayak) {
             Kayak kayak = (Kayak) vehicle;
-            System.out.println("Kajak (" + kayak.getKayakType() + ")");
             System.out.println("Kapacitet: " + kayak.getCapacity() + " personer | Längd: " + kayak.getLength() + "m");
 
             // Display motor boat details
         } else if (vehicle instanceof MotorBoat) {
             MotorBoat boat = (MotorBoat) vehicle;
-            System.out.println("Motorbåt (" + boat.getEnginePower() + " hk)");
             System.out.println("Kapacitet: " + boat.getCapacity() + " personer | Längd: " + boat.getLength() + "m");
 
             // Display electric boat details
         } else if (vehicle instanceof ElectricBoat) {
             ElectricBoat boat = (ElectricBoat) vehicle;
-            System.out.println("Elbåt (Max: " + boat.getMaxSpeed() + " km/h)");
             System.out.println("Kapacitet: " + boat.getCapacity() + " personer | Batteri: " + boat.getBatteryCapacity() + " kWh");
 
             // Display row boat details
         } else if (vehicle instanceof RowBoat) {
             RowBoat boat = (RowBoat) vehicle;
-            System.out.println("Roddbåt (" + boat.getOars() + " åror)");
             System.out.println("Kapacitet: " + boat.getCapacity() + " personer | Längd: " + boat.getLength() + "m");
         }
     }
@@ -330,31 +326,26 @@ public class ItemSelector {
         // Display tent details
         if (camping instanceof Tent) {
             Tent tent = (Tent) camping;
-            System.out.println("Typ: Tält (" + tent.getTentType() + ")");
             System.out.println("Kapacitet: " + tent.getCapacity() + " personer | Säsong: " + tent.getSeasonRating());
 
             // Display backpack details
         } else if (camping instanceof Backpack) {
             Backpack backpack = (Backpack) camping;
-            System.out.println("Typ: Ryggsäck (" + backpack.getBackpackType() + ")");
             System.out.println("Volym: " + backpack.getVolume() + "L | Tillverkare: " + backpack.getBrand());
 
             // Display sleeping bag details
         } else if (camping instanceof SleepingBag) {
             SleepingBag bag = (SleepingBag) camping;
-            System.out.println("Typ: Sovsäck");
             System.out.println("Temperatur: " + bag.getTemperatureRating() + "°C | Säsong: " + bag.getSeasonRating());
 
             // Display lantern details
         } else if (camping instanceof Lantern) {
             Lantern lantern = (Lantern) camping;
-            System.out.println("Typ: Lykta");
             System.out.println("Ljusstyrka: " + lantern.getBrightness() + " lumens | Ström: " + lantern.getPowerSource());
 
             // Display trangia kitchen details
         } else if (camping instanceof TrangiaKitchen) {
             TrangiaKitchen trangia = (TrangiaKitchen) camping;
-            System.out.println("Typ: Trangiakök");
             System.out.println("Brännare: " + trangia.getBurners() + " st | Bränsle: " + trangia.getFuelType());
         }
     }
@@ -368,19 +359,16 @@ public class ItemSelector {
         // Display fishing rod details
         if (fishing instanceof FishingRod) {
             FishingRod rod = (FishingRod) fishing;
-            System.out.println("Typ: Fiskespö (" + rod.getRodType() + ")");
             System.out.println("Längd: " + rod.getRodLength() + "m | Tillverkare: " + rod.getBrand());
 
             // Display fishing net details
         } else if (fishing instanceof FishingNet) {
             FishingNet net = (FishingNet) fishing;
-            System.out.println("Typ: Fiskenät (" + net.getNetSize() + ")");
             System.out.println("Maskstorlek: " + net.getMeshSize() + "mm | Tillverkare: " + net.getBrand());
 
             // Display fishing bait details
         } else if (fishing instanceof FishingBait) {
             FishingBait bait = (FishingBait) fishing;
-            System.out.println("Typ: Bete (" + bait.getBaitType() + ")");
             System.out.println("Antal: " + bait.getQuantity() + " st | Tillverkare: " + bait.getBrand());
         }
     }

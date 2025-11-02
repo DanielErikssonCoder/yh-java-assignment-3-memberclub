@@ -171,19 +171,35 @@ Organized into clear packages where each has a specific responsibility.
 **From terminal (Unix/Mac/Git Bash):**
 ```bash
 # Compile all files
-javac -d out src/Main.java src/com/memberclub/**/*.java
+javac -encoding UTF-8 -d out src/Main.java src/com/memberclub/**/*.java
 
 # Run
-java -cp out Main
+java -Dfile.encoding=UTF-8 -cp out Main
 ```
 
 **From PowerShell (Windows):**
 ```powershell
+# Set console encoding to UTF-8 (required for special characters)
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::InputEncoding = [System.Text.Encoding]::UTF8
+
 # Compile all files
-javac -d out -sourcepath src src/Main.java
+javac -encoding UTF-8 -d out -sourcepath src src/Main.java
+
+# Run with UTF-8 support
+java "-Dfile.encoding=UTF-8" -cp out Main
+```
+
+**From Command Prompt (Windows):**
+```cmd
+# Set console to UTF-8
+chcp 65001
+
+# Compile
+javac -encoding UTF-8 -d out -sourcepath src src/Main.java
 
 # Run
-java -cp out Main
+java -Dfile.encoding=UTF-8 -cp out Main
 ```
 
 **Using IntelliJ IDEA:**
@@ -204,7 +220,7 @@ java -cp out Main
 5. **Select member** to rent for
 6. **Add items to shopping cart** - browse categories
 7. **Choose rental period** - hourly or daily
-8. **Checkout** - get receipt with discount applied
+8. **Checkout** - get receipt with discount applied (if applicable)
 9. **Return items** - late fees apply if overdue
 
 ### Preloaded Demo Data
@@ -280,7 +296,7 @@ ANSI codes for better UX. Clears between operations so menu doesn't scroll away.
 
 ## Requirements Met
 
-- Inheritance (3-level hierarchy)
+- Inheritance (4-level hierarchy)
 - Polymorphism (abstract methods, interface implementations)
 - Encapsulation (private fields, public interfaces)
 - Composition (services composed into ClubSystem)

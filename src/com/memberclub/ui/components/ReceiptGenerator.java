@@ -2,6 +2,7 @@ package com.memberclub.ui.components;
 
 import com.memberclub.model.*;
 import com.memberclub.model.enums.RentalPeriod;
+import com.memberclub.ui.ItemView;
 import com.memberclub.ui.UIHelper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,7 +52,7 @@ public class ReceiptGenerator {
             CartItem cartItem = cart.get(i);
 
             // Display item information
-            System.out.println("Artikel " + (i + 1) + ": " + cartItem.getItem().getId() + " - " + cartItem.getItem().getName() + " (" + ItemSelector.getItemTypeDescription(cartItem.getItem()) + ")");
+            System.out.println(ItemView.formatItemForList(i + 1, cartItem.getItem()));
 
             // Calculate when item should be returned
             LocalDateTime returnDateTime = calculateReturnDateTime(cartItem);
@@ -160,7 +161,7 @@ public class ReceiptGenerator {
     public double displaySingleReturnReceipt(Rental rental, Item item, Member member) {
         helper.clearScreen();
         helper.printHeader("        ARTIKEL RETURNERAD");
-        System.out.println("Artikel: " + item.getName() + " [" + item.getId() + "] (" + ItemSelector.getItemTypeDescription(item) + ")");
+        System.out.println(ItemView.formatItemFull(item));
         System.out.println("Medlem: " + member.getName());
         System.out.println("Hyrd från: " + rental.getStartDate());
 

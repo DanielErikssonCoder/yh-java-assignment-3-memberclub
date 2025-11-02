@@ -207,7 +207,7 @@ public class RentalView {
         helper.clearScreen();
         System.out.println("Valda artiklar:");
         for (int i = 0; i < selectedItems.size(); i++) {
-            System.out.println((i + 1) + ". " + selectedItems.get(i).getName() + " (" + ItemSelector.getItemTypeDescription(selectedItems.get(i)) + ")");
+            System.out.println(ItemView.formatItemForList(i + 1, selectedItems.get(i)));
         }
 
         // Ask for same or different periods
@@ -289,8 +289,7 @@ public class RentalView {
 
         // Display each cart item
         for (CartItem cartItem : cart.getItems()) {
-            System.out.print(cartItem.getItem().getId() + " - " + cartItem.getItem().getName());
-            System.out.print(" (" + ItemSelector.getItemTypeDescription(cartItem.getItem()) + ")");
+            System.out.print(ItemView.formatItemShort(cartItem.getItem()));
             System.out.print(" - " + cartItem.getDuration() + " ");
             System.out.print(cartItem.getPeriod() == RentalPeriod.HOURLY ? (cartItem.getDuration() == 1 ? "timme" : "timmar") : (cartItem.getDuration() == 1 ? "dag" : "dagar"));
             System.out.printf(" (%.2f kr)%n", cartItem.getPrice());
@@ -420,7 +419,7 @@ public class RentalView {
 
                 // Display rental information
                 System.out.println();
-                System.out.println("Artikel: " + item.getId() + " - " + item.getName() + " (" + ItemSelector.getItemTypeDescription(item) + ")");
+                System.out.println(ItemView.formatItemFull(item));
                 System.out.println("Medlem: " + member.getName() + " (" + member.getMembershipLevel() + ")");
                 System.out.println("Hyrd från: " + rental.getStartDate());
                 System.out.printf("Pris: %.2f kr%n", rental.getTotalCost());
@@ -450,7 +449,7 @@ public class RentalView {
 
                 // Display rental information
                 System.out.println();
-                System.out.println("Artikel: " + item.getId() + " - " + item.getName() + " (" + ItemSelector.getItemTypeDescription(item) + ")");
+                System.out.println(ItemView.formatItemFull(item));
                 System.out.println("Medlem: " + member.getName() + " (" + member.getMembershipLevel() + ")");
                 System.out.println("Period: " + rental.getStartDate() + " - " + rental.getEndDate());
                 System.out.printf("Betalt: %.2f kr%n", rental.getTotalCost());

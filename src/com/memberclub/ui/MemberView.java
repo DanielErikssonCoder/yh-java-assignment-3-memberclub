@@ -538,10 +538,10 @@ public class MemberView {
 
             // Display item information
             if (item != null) {
-                System.out.println("Artikel: " + itemName + " (" + ItemSelector.getItemTypeDescription(item) + ")");
+                System.out.println(ItemView.formatItemFull(item));
 
             } else {
-                System.out.println("Artikel: " + itemName);
+                System.out.println("Artikel: Okänd artikel [" + rental.getItemId() + "]");
             }
 
             System.out.println("Startdatum: " + rental.getStartDate());

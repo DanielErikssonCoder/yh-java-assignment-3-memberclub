@@ -98,6 +98,30 @@ public class ItemView {
     }
 
     /**
+     * Format item for selection lists with number prefix
+     */
+    public static String formatItemForList(int number, Item item) {
+        return "[" + number + "] " + item.getName() + " [" + item.getId() + "] (" +
+                ItemSelector.getItemTypeDescription(item) + ")";
+    }
+
+    /**
+     * Format item as short summary
+     */
+    public static String formatItemShort(Item item) {
+        return item.getName() + " [" + item.getId() + "] (" +
+                ItemSelector.getItemTypeDescription(item) + ")";
+    }
+
+    /**
+     * Format item for receipts and details with label
+     */
+    public static String formatItemFull(Item item) {
+        return "Artikel: " + item.getName() + " [" + item.getId() + "] (" +
+                ItemSelector.getItemTypeDescription(item) + ")";
+    }
+
+    /**
      * Helper method to display individual item information
      */
     private void displayItemInfo(Item item) {

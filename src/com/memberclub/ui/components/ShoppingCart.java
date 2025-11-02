@@ -3,6 +3,7 @@ package com.memberclub.ui.components;
 import com.memberclub.model.Item;
 import com.memberclub.model.Member;
 import com.memberclub.model.enums.RentalPeriod;
+import com.memberclub.ui.ItemView;
 import com.memberclub.ui.UIHelper;
 import com.memberclub.ui.validation.InputValidator;
 import java.util.ArrayList;
@@ -161,7 +162,7 @@ public class ShoppingCart {
 
             // Get current cart item and display item name, rental duration and price
             CartItem cartItem = items.get(i);
-            System.out.println("[" + (i + 1) + "] " + cartItem.getItem().getName());
+            System.out.println(ItemView.formatItemForList(i + 1, cartItem.getItem()));
             System.out.println("    Längd: " + cartItem.getDuration() + " " + (cartItem.getPeriod() == RentalPeriod.HOURLY ? (cartItem.getDuration() == 1 ? "timme" : "timmar") : (cartItem.getDuration() == 1 ? "dag" : "dagar")));
             System.out.printf("    Pris: %.2f kr%n", cartItem.getPrice());
             System.out.println();
@@ -244,7 +245,7 @@ public class ShoppingCart {
         // Display confirmation if successful
         if (removed != null) {
             helper.clearScreen();
-            System.out.println(removed.getItem().getName() + " borttagen från kundvagnen!");
+            System.out.println(ItemView.formatItemShort(removed.getItem()) + " borttagen från kundvagnen!");
             helper.pressEnterToContinue();
         }
     }

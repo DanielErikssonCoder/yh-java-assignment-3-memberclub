@@ -4,6 +4,8 @@ import com.memberclub.system.ClubSystem;
 import com.memberclub.model.User;
 import com.memberclub.ui.validation.InputValidator;
 import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Console-based UI for the Member Club Rental System.
@@ -26,7 +28,7 @@ public class ConsoleMenu {
      * @param system the club system to interact with
      */
     public ConsoleMenu(ClubSystem system) {
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         this.system = system;
         this.currentUser = null;
         this.helper = new UIHelper(scanner);
