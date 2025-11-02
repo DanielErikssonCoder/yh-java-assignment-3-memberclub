@@ -18,7 +18,7 @@ A rental management system for a member club built in Java, demonstrating object
 
 Built as part of YH education in Java System Development. The goal was to demonstrate understanding of OOP concepts including inheritance, polymorphism, interfaces, and design patterns.
 
-I chose to build a complete rental system with authentication, shopping cart functionality, and a pricing strategy pattern from the start. Could have made it simpler but wanted to show proper separation of concerns and scalable architecture.
+I chose to build a complete rental system with authentication, shopping cart functionality, and a pricing strategy pattern from the start. The implementation demonstrates proper separation of concerns and scalable architecture.
 
 ## Functionality
 
@@ -168,9 +168,6 @@ Organized into clear packages where each has a specific responsibility.
 
 ### Compile and Run
 
-**From terminal:**
-
-
 **From terminal (Unix/Mac/Git Bash):**
 ```bash
 # Compile all files
@@ -195,12 +192,6 @@ java -cp out Main
 2. Right-click `Main.java`
 3. Select "Run 'Main.main()'"
 
-
-**Using IntelliJ IDEA:**
-
-1. Open project
-2. Right-click `Main.java`
-3. Select "Run 'Main.main()'"
 
 ## Usage
 
@@ -235,9 +226,18 @@ Everything should work without crashes. All input is validated.
 
 ## Technical Choices
 
-### Three-Level Inheritance
+### Multi-Level Inheritance (3-4 Levels)
 
-Base abstract (`Item`) → category abstract (`CampingEquipment`) → concrete class (`Tent`). Shows understanding of when to use abstract classes vs interfaces.
+**Three-level hierarchy** (most items):
+- Base abstract (`Item`) → category abstract (`CampingEquipment`) → concrete class (`Tent`)
+- Examples: Tent, SleepingBag, Backpack, FishingRod, FishingNet, Kayak
+
+**Four-level hierarchy** (boats):
+- Base abstract (`Item`) → category abstract (`WaterVehicle`) → intermediate abstract (`Boat`) → concrete class (`MotorBoat`)
+- The extra `Boat` level exists because all boats share common attributes (`horsepower`) while having different power sources (motor, electric, rowing)
+- Examples: MotorBoat, ElectricBoat, RowBoat
+
+This demonstrates understanding of when to add intermediate abstractions to avoid code duplication while maintaining clean separation of concerns.
 
 ### Strategy Pattern for Pricing
 
@@ -277,7 +277,6 @@ ANSI codes for better UX. Clears between operations so menu doesn't scroll away.
 - **12 UI classes** for user interaction
 - **16 enumerations** for type safety
 - **4 custom exceptions** for error handling
-- **Zero external dependencies** - pure Java standard library
 
 ## Requirements Met
 
