@@ -242,15 +242,15 @@ Everything should work without crashes. All input is validated.
 
 ## Technical Choices
 
-### Multi-Level Inheritance (3-4 Levels)
+### Multi-Level Inheritance
 
-**Three-level hierarchy** (most items):
+**3-level hierarchy** (most items):
 - Base abstract (`Item`) → category abstract (`CampingEquipment`) → concrete class (`Tent`)
 - Examples: Tent, SleepingBag, Backpack, FishingRod, FishingNet, Kayak
 
-**Four-level hierarchy** (boats):
+**4-level hierarchy** (boats):
 - Base abstract (`Item`) → category abstract (`WaterVehicle`) → intermediate abstract (`Boat`) → concrete class (`MotorBoat`)
-- The extra `Boat` level exists because all boats share common attributes (`horsepower`) while having different power sources (motor, electric, rowing)
+- The extra `Boat` level exists because all boats share common attributes (`hasFishFinder`, `maxSpeed`) while having different power sources (motor, electric, rowing)
 - Examples: MotorBoat, ElectricBoat, RowBoat
 
 This demonstrates understanding of when to add intermediate abstractions to avoid code duplication while maintaining clean separation of concerns.
@@ -296,7 +296,7 @@ ANSI codes for better UX. Clears between operations so menu doesn't scroll away.
 
 ## Requirements Met
 
-- Inheritance (4-level hierarchy)
+- Inheritance (3-level & 4-level hierarchy)
 - Polymorphism (abstract methods, interface implementations)
 - Encapsulation (private fields, public interfaces)
 - Composition (services composed into ClubSystem)
