@@ -66,6 +66,7 @@ public class ConsoleMenu {
             System.out.println();
             System.out.println("[1] Logga in");
             System.out.println("[2] Skapa användare");
+            System.out.println();
             System.out.println("[0] Avsluta program");
             System.out.println();
             System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
