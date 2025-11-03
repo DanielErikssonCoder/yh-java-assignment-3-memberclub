@@ -68,6 +68,7 @@ public class RentalView {
             helper.clearScreen();
             helper.printHeader("           HYRA ARTIKEL");
             System.out.println("Medlem: " + MemberView.formatMemberFull(selectedMember));
+            System.out.println();
             System.out.println("Artiklar i kundvagn: " + cart.size() + " st");
             System.out.println();
             helper.printDivider();
