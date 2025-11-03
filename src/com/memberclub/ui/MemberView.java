@@ -137,7 +137,6 @@ public class MemberView {
         }
 
         System.out.println();
-        System.out.println();
         helper.printDivider();
         System.out.println("STUDENT MEDLEMMAR (" + studentMembers.size() + " st)");
         helper.printDivider();
@@ -150,7 +149,6 @@ public class MemberView {
             System.out.println("Telefon: " + member.getPhone());
         }
 
-        System.out.println();
         System.out.println();
         helper.printDivider();
         System.out.println("PREMIUM MEDLEMMAR (" + premiumMembers.size() + " st)");
@@ -322,6 +320,7 @@ public class MemberView {
 
         System.out.println();
         System.out.println(" [0] Avbryt");
+        System.out.println();
         System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
         System.out.print("Välj medlem att ta bort: ");
 
@@ -385,7 +384,9 @@ public class MemberView {
             if (removed) {
                 helper.clearScreen();
                 System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
+                System.out.println();
                 System.out.println("Medlem: '" + selectedMember.getName() + "' har tagits bort!");
+                System.out.println();
                 System.out.println(UIHelper.GREEN + "=====================================" + UIHelper.RESET);
             } else {
                 helper.clearScreen();
