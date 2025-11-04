@@ -11,7 +11,6 @@ A rental management system for a member club built in Java, demonstrating object
 - [How to Run](#how-to-run)
 - [Usage](#usage)
 - [Technical Choices](#technical-choices)
-- [Statistics](#statistics)
 - [Requirements Met](#requirements-met)
 
 ## About the Project
@@ -282,17 +281,6 @@ Used `HashMap<ID, Object>` in registries for O(1) lookup instead of `ArrayList`.
 ### Clear Screen
 
 ANSI codes for better UX. Clears between operations so menu doesn't scroll away.
-
-## Statistics
-
-- **67 Java files** across 12 packages
-- **20 model classes** (including 3 abstract bases)
-- **5 service classes** for business logic
-- **5 pricing classes** implementing strategy pattern
-- **4 system classes** for core infrastructure
-- **12 UI classes** for user interaction
-- **16 enumerations** for type safety
-- **4 custom exceptions** for error handling
 
 ## Requirements Met
 
