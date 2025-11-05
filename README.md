@@ -2,6 +2,9 @@
 
 A rental management system for a member club built in Java, demonstrating object-oriented programming principles.
 
+[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://openjdk.org/)
+
+
 ## Table of Contents
 
 - [About the Project](#about-the-project)
